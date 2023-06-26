@@ -7,6 +7,7 @@ export const ROUTES = {
     REVIEW: 'Review',
     WRITE_REVIEW: 'Write Review',
     EXPLORE: 'Explore',
+    EXPLORE_SEARCH: 'Explore Search',
     CART: 'Cart',
     OFFER: 'Offer',
     ACCOUNT: 'Account',

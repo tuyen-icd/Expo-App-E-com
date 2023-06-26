@@ -7,8 +7,9 @@ import FlashSaleView from "../views/FlashSaleView";
 import ProductDetail from "../views/ProductView/ProductDetail";
 import ReviewScreen from "../views/ReviewView/ReviewScreen";
 import WriteReviewScreen from "../views/ReviewView/WriteReviewScreen";
-import ExploreView from "../views/ExploreView";
 import ButtonTabNavigator from "./BottomTabNavigator";
+import ExploreScreen from "../views/ExploreView/ExploreScreen";
+import ExploreSearch from "../views/ExploreView/ExploreSearch";
 
 const Stack = createStackNavigator();
 
@@ -86,8 +87,8 @@ const AuthNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.EXPLORE}
-        component={ExploreView}
+        name={ROUTES.EXPLORE_SEARCH}
+        component={ExploreSearch}
         options={{
           headerShown: false,
           gestureEnabled: false,

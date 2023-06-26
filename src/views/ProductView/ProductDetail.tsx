@@ -2,7 +2,7 @@ import { FlatList, Platform, ScrollView, StyleSheet, Text, View } from 'react-na
 import React, { FC, useEffect, useState } from 'react'
 import BackHeader from '../../components/Header/BackHeader'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ICExplore, ICExploreActive, ICFavious } from '../../assets/icons';
+import { ICExplore, ICExploreActive, ICFavious, IcFaviousActive } from '../../assets/icons';
 import UserInput from '../../components/UserInput';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
@@ -28,9 +28,9 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     const { dataProduct, getPostComment } = route.params;
     const imageCaroselProduct = dataProduct?.images;
     const [flagSearch, setFlagSearch] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
     const [alsoLike, setAlsoLike] = useState();
-    const [allComment, getAllComment] = useState<any>([])
+    const [favious, setFavious] = useState(false);
+    console.log('data cua product detail :>> ', dataProduct);
 
     //Only New ElementReview
 
@@ -46,14 +46,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
             .then((response) => navigation.navigate(ROUTES.REVIEW as never, { allComments: response.data, postId: dataProduct }))
             .catch((error) => console.log(error))
     }
-
-    const handleSreachTermChange = (e: string) => {
-        setSearchTerm(e);
-    };
-    const handleSearchSubmit = () => {
-        setFlagSearch(false);
-        console.log("abc")
-    }
     return (
         <View style={{ backgroundColor: AppEComm.color.white, flex: 1 }}>
             <View style={styles.header}>
@@ -61,22 +53,8 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                     !flagSearch ? <BackHeader title={capitalizeFirstLetter(dataProduct.title)} /> : ''
                 }
 
-                <TouchableOpacity onPress={() => setFlagSearch(true)}>
-                    {
-                        !flagSearch ? <ICExplore /> :
-                            <View style={styles.emptyContainer}>
-                                <UserInput.TextInput
-                                    rightComponent={iconProps => <ICExploreActive {...iconProps} />}
-                                    placeholder={'Search Product'}
-                                    containerStyle={styles.searchProduct}
-                                    onChangeText={handleSreachTermChange}
-                                    value={searchTerm}
-                                    returnKeyType="search"
-                                    onSubmitEditing={handleSearchSubmit}
-                                />
-                            </View>
-                    }
-
+                <TouchableOpacity onPress={() => navigation.navigate(ROUTES.EXPLORE as never)}>
+                    <ICExplore />
                 </TouchableOpacity>
             </View>
             <View style={{ flex: 1, paddingHorizontal: 16, paddingBottom: heightPixel(50) }}>
@@ -96,8 +74,11 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                 {capitalizeFirstLetter(dataProduct?.title)}
                             </Text>
 
-                            <TouchableOpacity onPress={() => console.log("yeu thich san pham")}>
-                                <ICFavious />
+                            <TouchableOpacity onPress={() => setFavious(prev => !prev)}>
+                                {
+                                    favious ? <IcFaviousActive /> : <ICFavious />
+                                }
+
                             </TouchableOpacity>
                         </View>
                         <View style={{ alignItems: 'flex-start' }}>
@@ -286,7 +267,7 @@ const styles = StyleSheet.create({
     },
     borderSize: {
         borderRadius: 100,
-        borderWidth: widthPixel(1),
+        borderWidth: widthPixel(1.5),
         borderColor: AppEComm.color.borderColor,
         height: heightPixel(48),
         width: widthPixel(48),

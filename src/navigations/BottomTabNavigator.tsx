@@ -20,12 +20,12 @@ import {
 import { heightPixel, widthPixel } from "../ultils/scanling";
 import HomeView from "../views/HomeView";
 import CustomTabBar from "./CustomNavigator/CustomTabBar";
-import ExploreView from "../views/ExploreView";
-import CartView from "../views/CartView";
 import OfferView from "../views/OfferView";
 import AccountScreen from "../views/AccountView/AccountScreen";
 import AccountView from "../views/AccountView";
 import CustomTabBarButton from "./CustomNavigator/CustomTabBarButton";
+import ExploreScreen from "../views/ExploreView/ExploreScreen";
+import CartScreen from "../views/CartView/CartScreen";
 
 interface Props {
     openDrawer: any;
@@ -75,7 +75,7 @@ function ButtonTabNavigator() {
 
             <Tab.Screen
                 name={ROUTES.EXPLORE}
-                component={ExploreView}
+                component={ExploreScreen}
                 options={{
                     tabBarButton: (props) => (
                         <CustomTabBarButton route="Explore" {...props} />
@@ -86,7 +86,7 @@ function ButtonTabNavigator() {
 
             <Tab.Screen
                 name={ROUTES.CART}
-                component={CartView}
+                component={CartScreen}
                 options={{
                     tabBarButton: (props) => (
                         <CustomTabBarButton route="Cart" {...props} />
@@ -96,7 +96,7 @@ function ButtonTabNavigator() {
 
             <Tab.Screen
                 name={ROUTES.OFFER}
-                component={CartView}
+                component={OfferView}
                 options={{
                     tabBarButton: (props) => (
                         <CustomTabBarButton route="Offert" {...props} />

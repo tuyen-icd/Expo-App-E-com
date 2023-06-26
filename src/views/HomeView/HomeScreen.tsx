@@ -11,9 +11,12 @@ import Category from "../../components/Category/Category";
 import FlashSale from "../../components/FlashSale/FlashSale";
 import MegaSale from "../../components/MegaSale/MegaSale";
 import ItemProduct from "../../components/ItemProduct/ItemProduct";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTES } from "../../navigations/routers";
 
 const HomeScreen = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const navigation: any = useNavigation();
+  const [txtSearch, setTxtSearch] = useState("");
   const [flashSale, setFlashSale] = useState([]);
   const [dataSliderCarousel, setDataSliderCarousel] = useState([]);
   const [dataProductBottom, setDataProductBottom] = useState<any[]>([]);
@@ -46,10 +49,13 @@ const HomeScreen = () => {
   }, []);
 
   const handleSreachTermChange = (e: string) => {
-    setSearchTerm(e);
+    setTxtSearch(e);
   };
   const handleSearchSubmit = () => {
-    console.log("abc");
+    if (txtSearch !== '') {
+      navigation.navigate(ROUTES.EXPLORE_SEARCH as never, { txtSearch: txtSearch } as never)
+    }
+    return;
   };
   return (
     <View style={{ flex: 1 }}>
@@ -60,12 +66,12 @@ const HomeScreen = () => {
             placeholder={"Search Product"}
             containerStyle={styles.searchProduct}
             onChangeText={handleSreachTermChange}
-            value={searchTerm}
+            value={txtSearch}
             returnKeyType="search"
             onSubmitEditing={handleSearchSubmit}
           />
         </View>
-        <MainRightControl visibleNotification={true} visibleFavious={true} />
+        <MainRightControl visibleNotification={true} visibleFavious={true} visibleShort={false} />
       </View>
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -114,7 +120,7 @@ const HomeScreen = () => {
             </View>
           </View>
 
-          <View style={{ paddingBottom: heightPixel(150) }}>
+          <View style={{ paddingBottom: heightPixel(250) }}>
             <FlatList
               data={dataProductBottom}
               renderItem={({ item }) => (

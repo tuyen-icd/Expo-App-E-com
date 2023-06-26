@@ -23,7 +23,7 @@ const ItemReview: FC<ItemReviewProps> = ({ newElementReview, commnents }) => {
                         backgroundColor: '#FFFF',
                         alignItems: 'center',
                         borderColor: AppEComm.color.borderColor,
-                        borderWidth: widthPixel(1),
+                        borderWidth: widthPixel(1.5),
                         borderRadius: 100,
                         height: heightPixel(48),
                         width: widthPixel(48),

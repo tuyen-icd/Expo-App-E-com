@@ -26,6 +26,12 @@ export const ICNotification = require('./ic_notification.svg').default;
 export const ICFavious = require('./ic_favious.svg').default;
 export const IcPhone = require('./ic_phone_new.svg').default;
 export const IcPhoneActive = require('./ic_phone_active_new.svg').default;
+export const IcNotFound = require('./ic_not_found.svg').default;
+export const IcShort = require('./ic_short.svg').default;
+export const IcTrash = require('./ic_trash.svg').default;
+export const IcMinus = require('./ic_minus.svg').default;
+export const IcPlus = require('./ic_plus.svg').default;
+export const IcFaviousActive = require('./ic_favious_active.svg').default;
 
 
 //Category

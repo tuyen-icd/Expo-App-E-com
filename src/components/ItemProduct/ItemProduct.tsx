@@ -11,20 +11,20 @@ import axios from 'axios'
 import { ROUTES } from '../../navigations/routers'
 import App from '../../../App'
 
-interface ItemProductProps {
+export interface ItemProductProps {
     dataProduct?: any,
     id: number,
     title: string,
     price: number,
     discountPercentage: number,
-    thumbnail: any,
-    rating?: any
+    thumbnail: string,
+    rating?: number
     containerStyle?: any
-    tag?: boolean
+    tag?: any
 }
 
 
-const ItemProduct: FC<ItemProductProps> = ({ id, dataProduct, title, price, discountPercentage, thumbnail, containerStyle, rating, tag }) => {
+const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discountPercentage, thumbnail, containerStyle, rating, tag }) => {
     const navigation: any = useNavigation();
 
     const navigateProductDetail = () => {
@@ -92,7 +92,7 @@ export default ItemProduct
 
 const styles = StyleSheet.create({
     itemProduct: {
-        borderWidth: widthPixel(1),
+        borderWidth: widthPixel(1.5),
         borderColor: AppEComm.color.borderColor,
         borderRadius: widthPixel(5),
         padding: widthPixel(16),

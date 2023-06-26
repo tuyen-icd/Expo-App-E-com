@@ -1,6 +1,6 @@
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { FC } from 'react'
-import { ICCart, ICFavious, ICNotification } from '../../assets/icons';
+import { ICCart, ICFavious, ICNotification, IcShort } from '../../assets/icons';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
 
@@ -30,12 +30,20 @@ const NotiDot: FC<NotiDotProps> = ({ isVisible }) => {
     );
 };
 
-const MainRightControl = ({
+interface MainRightControlProps {
+    visibleNotification?: boolean,
+    visibleFavious?: boolean,
+    visibleShort?: boolean,
+}
+
+const MainRightControl: FC<MainRightControlProps> = ({
     visibleNotification = true,
     visibleFavious = true,
-
+    visibleShort = true,
 }) => {
+
     let shakeAnimation = new Animated.Value(0);
+
     return (
         <>
             {visibleFavious && (
@@ -49,8 +57,20 @@ const MainRightControl = ({
                 </Animated.View>
             )}
             {visibleNotification && (
-                <TouchableOpacity style={styles.icon} onPress={() => console.log("abc")}>
+                <TouchableOpacity
+                    style={styles.icon}
+                    onPress={() => console.log("abc")}>
                     <ICNotification />
+                    <NotiDot
+                        isVisible={true}
+                    />
+                </TouchableOpacity>
+            )}
+            {visibleShort && (
+                <TouchableOpacity
+                    style={styles.icon}
+                    onPress={() => console.log("short")}>
+                    <IcShort />
                     <NotiDot
                         isVisible={true}
                     />

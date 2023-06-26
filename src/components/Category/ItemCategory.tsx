@@ -7,13 +7,14 @@ interface ItemCategoryProps {
     title: string,
     id: number,
     image: any,
+    flag: boolean,
 }
 
-const ItemCategory: FC<ItemCategoryProps> = ({ title, id, image }) => {
+const ItemCategory: FC<ItemCategoryProps> = ({ title, id, image, flag }) => {
 
     return (
         <TouchableOpacity>
-            <View style={{ alignItems: 'center', paddingRight: widthPixel(13) }}>
+            <View style={{ alignItems: 'center', paddingRight: widthPixel(13), paddingBottom: flag ? 0 : 20 }}>
                 <View style={styles.itemCategory}>{image}</View>
                 <Text
                     style={{
@@ -36,7 +37,7 @@ export default ItemCategory
 const styles = StyleSheet.create({
     itemCategory: {
         borderColor: AppEComm.color.borderColor,
-        borderWidth: widthPixel(1),
+        borderWidth: widthPixel(1.5),
         borderRadius: 100,
         flex: 0,
         padding: heightPixel(23),

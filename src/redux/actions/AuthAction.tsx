@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { DO_LOGIN, DO_REGISTER, SUCCESS } from "./ActionTypes";
 
 

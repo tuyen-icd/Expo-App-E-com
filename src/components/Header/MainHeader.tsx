@@ -14,7 +14,7 @@ const MainHeader: FC<MainHeaderProps> = ({ containerStyle, title }) => {
         <View style={[styles.container, containerStyle]}>
             <Text style={[styles.title]}>{title}</Text>
             <View style={styles.emptyContainer}></View>
-            <MainRightControl visibleNotification={true} visibleFavious={true} />
+            <MainRightControl visibleNotification={true} visibleFavious={true} visibleShort={false} />
         </View>
     )
 }

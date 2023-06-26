@@ -10,14 +10,17 @@ import { DataCategory } from "../../constants/DataFake";
 import ItemCategory from "./ItemCategory";
 import { AppEComm } from "../../constants/colors";
 import { fontPixel, heightPixel } from "../../ultils/scanling";
+import { useNavigation } from "@react-navigation/native";
+import { ROUTES } from "../../navigations/routers";
 
 interface CategoryProps {
   flag: boolean;
 }
 
 const Category: FC<CategoryProps> = ({ flag }) => {
+  const navigation = useNavigation()
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View style={styles.category}>
         {flag && (
           <View
@@ -29,7 +32,7 @@ const Category: FC<CategoryProps> = ({ flag }) => {
             }}
           >
             <Text style={styles.txtCategory}>Category</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate(ROUTES.EXPLORE as never)}>
               <Text style={styles.txtMoreCategory}>More Category</Text>
             </TouchableOpacity>
           </View>
@@ -38,13 +41,13 @@ const Category: FC<CategoryProps> = ({ flag }) => {
         <FlatList
           data={DataCategory}
           renderItem={({ item }) => (
-            <ItemCategory title={item.title} id={item.id} image={item.image} />
+            <ItemCategory title={item.title} id={item.id} image={item.image} flag={flag} />
           )}
           horizontal={flag ? true : false}
-          showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
           numColumns={flag ? 1 : 4}
-          scrollEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={false}
         />
       </View>
     </View>
