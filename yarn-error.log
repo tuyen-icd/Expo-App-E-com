@@ -39,6 +39,7 @@ npm manifest:
     },
     "dependencies": {
       "@react-native-async-storage/async-storage": "^1.18.2",
+      "@react-native-community/cli-debugger-ui": "^11.3.3",
       "@react-native-masked-view/masked-view": "0.2.8",
       "@react-navigation/bottom-tabs": "^6.5.8",
       "@react-navigation/drawer": "^6.6.2",
@@ -1777,6 +1778,13 @@ Lockfile:
     version "10.0.0"
     resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-10.0.0.tgz#4bb6d41c7e46449714dc7ba5d9f5b41ef0ea7c57"
     integrity sha512-8UKLcvpSNxnUTRy8CkCl27GGLqZunQ9ncGYhSrWyKrU9SWBJJGeZwi2k2KaoJi5FvF2+cD0t8z8cU6lsq2ZZmA==
+    dependencies:
+      serve-static "^1.13.1"
+  
+  "@react-native-community/cli-debugger-ui@^11.3.3":
+    version "11.3.3"
+    resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-11.3.3.tgz#4bdf5665926c63d73a96d21adde03a93df447215"
+    integrity sha512-iVKcwyK2iKlq/qVtSbhk5fGsrOamAx7j50QhDMrZ6NmYZq+k75k253+YTzXoxWdPPZhsdhmILuBJgf8orIYCPQ==
     dependencies:
       serve-static "^1.13.1"
   

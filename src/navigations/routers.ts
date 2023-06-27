@@ -11,4 +11,7 @@ export const ROUTES = {
     CART: 'Cart',
     OFFER: 'Offer',
     ACCOUNT: 'Account',
+    SHIP_TO: 'Ship To',
+    ADDRESS_SHIP: 'Address Ship',
+    PAYMENT: 'Payment',
 }

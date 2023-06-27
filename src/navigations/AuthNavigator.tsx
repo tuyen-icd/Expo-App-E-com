@@ -8,8 +8,9 @@ import ProductDetail from "../views/ProductView/ProductDetail";
 import ReviewScreen from "../views/ReviewView/ReviewScreen";
 import WriteReviewScreen from "../views/ReviewView/WriteReviewScreen";
 import ButtonTabNavigator from "./BottomTabNavigator";
-import ExploreScreen from "../views/ExploreView/ExploreScreen";
 import ExploreSearch from "../views/ExploreView/ExploreSearch";
+import ShiptoScreen from "../views/CartView/components/ShipToScreen";
+import AddressShip from "../views/CartView/components/AddressShipScreen";
 
 const Stack = createStackNavigator();
 
@@ -89,6 +90,24 @@ const AuthNavigator = () => {
       <Stack.Screen
         name={ROUTES.EXPLORE_SEARCH}
         component={ExploreSearch}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.SHIP_TO}
+        component={ShiptoScreen}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.ADDRESS_SHIP}
+        component={AddressShip}
         options={{
           headerShown: false,
           gestureEnabled: false,

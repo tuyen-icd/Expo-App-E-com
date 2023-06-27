@@ -32,6 +32,7 @@ export const IcTrash = require('./ic_trash.svg').default;
 export const IcMinus = require('./ic_minus.svg').default;
 export const IcPlus = require('./ic_plus.svg').default;
 export const IcFaviousActive = require('./ic_favious_active.svg').default;
+export const ICAddressActive = require('./ic_plus_add_shiptop_active.svg').default;
 
 
 //Category
@@ -56,3 +57,5 @@ export const ICAddCamera = require('./ic_add_camera.svg').default;
 //Image
 export const ImageBackgroundHome = require('../images/imageBackground.png');
 export const ICUser = require('../images/Ic_User.png');
+export const ImageShose = require('../images/image_shose.png');
+export const ImageTransport = require('../images/image_transport.png');

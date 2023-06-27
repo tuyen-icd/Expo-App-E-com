@@ -18,19 +18,23 @@ import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
 
+
 interface ProductDetailProps {
     route: any,
 }
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
+
     const navigation: any = useNavigation();
+
+    // const {data: }
 
     const { dataProduct, getPostComment } = route.params;
     const imageCaroselProduct = dataProduct?.images;
     const [flagSearch, setFlagSearch] = useState(false);
     const [alsoLike, setAlsoLike] = useState();
     const [favious, setFavious] = useState(false);
-    console.log('data cua product detail :>> ', dataProduct);
+    // console.log('data cua product detail :>> ', dataProduct);
 
     //Only New ElementReview
 
@@ -45,6 +49,11 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
         axios.get(`https://dummyjson.com/comments/post/${dataProduct.id}`)
             .then((response) => navigation.navigate(ROUTES.REVIEW as never, { allComments: response.data, postId: dataProduct }))
             .catch((error) => console.log(error))
+    }
+
+    const addProductToCart = (objectId: number) => {
+        console.log('addProductToCart :>> ', objectId);
+
     }
     return (
         <View style={{ backgroundColor: AppEComm.color.white, flex: 1 }}>
@@ -212,7 +221,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                 <Button
                     text="Add To Cart"
                     buttonSize="Medium"
-                    onPress={() => console.log('abc')}
+                    onPress={() => addProductToCart(dataProduct.id)}
                 />
             </View >
         </View >

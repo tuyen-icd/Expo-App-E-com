@@ -4,7 +4,7 @@ import Credentials from "../../repos/local/Credentials";
 import axios from "axios";
 import { API_LOGIN, API_REGISTER } from "../../configs";
 
-function* doLoginSaga(action: any): Generator<any, void, any> {
+function* doLoginSaga(action) {
   console.log("action :>> ", action);
   try {
     const requestData = {
@@ -18,6 +18,7 @@ function* doLoginSaga(action: any): Generator<any, void, any> {
       },
     });
     const result = response.data;
+    console.log('result_LoginSaga :>> ', result);
     if (result) {
       yield put({
         type: DO_LOGIN + SUCCESS,
@@ -34,8 +35,8 @@ function* doLoginSaga(action: any): Generator<any, void, any> {
     action.callback && action.callback(error, null);
   }
 }
-
-function* registerSaga(action: any): Generator<any, void, any> {
+// function* registerSaga(action: any): Generator<any, void, any> 
+function* registerSaga(action) {
   try {
     const requestData = action.userData;
 

@@ -1,23 +1,28 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling'
 import { AppEComm } from '../../constants/colors'
-import { ICFavious, IcMinus, IcPlus, IcTrash } from '../../assets/icons'
+import { ICFavious, IcFaviousActive, IcMinus, IcPlus, IcTrash, ImageShose } from '../../assets/icons'
 import { defaultStyle } from '../../constants/defaultStyle'
 
 const ItemAddToCart = () => {
+    const [favious, setFavious] = useState(false);
+
     return (
         <View style={styles.borderItem}>
             <View style={defaultStyle.flexJustify}>
-                <View style={styles.image}>
-
+                <View >
+                    <Image style={styles.image} source={ImageShose} />
                 </View>
                 <View style={{ flexDirection: 'column' }}>
                     <View style={[defaultStyle.flexJustify, { marginBottom: heightPixel(12) }]}>
                         <Text style={styles.titleItem}>Nike Air Zoom Pegasus 36 Miami</Text>
                         <View style={[defaultStyle.flexJustify, { gap: 10 }]}>
-                            <TouchableOpacity onPress={() => console.log('Favious')}>
-                                <ICFavious />
+                            <TouchableOpacity onPress={() => setFavious(prev => !prev)}>
+                                {
+                                    favious ? <IcFaviousActive /> : <ICFavious />
+                                }
+
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => console.log('Trash')}>
@@ -40,7 +45,6 @@ const ItemAddToCart = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'space-evenly',
-                            // padding: 6
                         }}>
                             <TouchableOpacity style={{ paddingHorizontal: widthPixel(10) }} onPress={() => console.log("minus")}>
                                 <IcMinus />
@@ -51,7 +55,8 @@ const ItemAddToCart = () => {
                                     fontSize: fontPixel(12),
                                     lineHeight: 15,
                                     letterSpacing: 0.5,
-                                    textAlign: 'center'
+                                    textAlign: 'center',
+                                    fontWeight: '500'
                                 }}>1</Text>
                             </View>
                             <TouchableOpacity style={{ paddingHorizontal: widthPixel(10) }} onPress={() => console.log("plus")}>
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
     image: {
         width: widthPixel(72),
         height: heightPixel(72),
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
         borderRadius: 5
     },
     titleItem: {

@@ -47,7 +47,7 @@ const Category: FC<CategoryProps> = ({ flag }) => {
           keyExtractor={(item, index) => index.toString()}
           numColumns={flag ? 1 : 4}
           showsHorizontalScrollIndicator={false}
-          scrollEnabled={false}
+          scrollEnabled={flag ? true : false}
         />
       </View>
     </View>

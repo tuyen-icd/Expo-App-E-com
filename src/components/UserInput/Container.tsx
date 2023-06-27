@@ -29,9 +29,9 @@ const ContainerComponent: FC<ContainerProps> = ({
 }) => {
     const getBorderColor = (isFocused: any, error: any) => {
         if (!isFocused) {
-            return Boolean(error) ? AppEComm.color.black : AppEComm.color.black;
+            return Boolean(error) ? AppEComm.color.red : AppEComm.color.black;
         }
-        return AppEComm.color.black;
+        return AppEComm.color.blue_001;
     };
     return (
 
@@ -42,7 +42,7 @@ const ContainerComponent: FC<ContainerProps> = ({
                     {
                         borderColor: getBorderColor(isFocused, error),
                         backgroundColor: Boolean(error)
-                            ? AppEComm.color.red
+                            ? AppEComm.color.white
                             : AppEComm.color.white
                     },
                     containerStyle,

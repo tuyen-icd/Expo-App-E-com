@@ -24,6 +24,7 @@ interface ButtonProps {
     onPress: () => void;
     leftComponent?: (iconStyles: any) => any;
     children?: JSX.Element | JSX.Element[];
+    containerStyle?: any,
 }
 
 const Button: FC<ButtonProps> = ({
@@ -35,11 +36,12 @@ const Button: FC<ButtonProps> = ({
     buttonStyles,
     leftComponent,
     onPress,
+    containerStyle,
 }) => {
     const largeHeight = heightPixel(60);
     const largeWidth = widthPixel(44);
     return (
-        <View style={styles.btnWrapper}>
+        <View style={[styles.btnWrapper, containerStyle]}>
             <LinearGradient
                 colors={[AppEComm.color.blue_001, AppEComm.color.blue_001]}
                 style={styles.linearGradient}

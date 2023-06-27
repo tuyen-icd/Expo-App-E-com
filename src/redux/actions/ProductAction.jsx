@@ -1,12 +1,12 @@
 import { FAILURE, GET_PRODUCTS, SUCCESS } from "./ActionTypes";
 
-export const getProduct = (payload: any, callback = (error: any, data: any) => { }) => ({
+export const getProduct = (payload, callback = (error, data) => { }) => ({
     type: GET_PRODUCTS,
     payload,
     callback,
 })
 
-export const getProductSuccess = (payload: { dataProduct: any; }) => {
+export const getProductSuccess = (payload) => {
 
     return {
         type: GET_PRODUCTS + SUCCESS,
@@ -14,7 +14,7 @@ export const getProductSuccess = (payload: { dataProduct: any; }) => {
     };
 };
 
-export const getProductFailure = (payload: any) => {
+export const getProductFailure = (payload) => {
     return {
         type: GET_PRODUCTS + FAILURE,
         payload,

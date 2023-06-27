@@ -5,7 +5,7 @@ const initalState = {
     data: null,
     error: null
 }
-export default (state = initalState, action: { type: any, payload: any }) => {
+export default (state = initalState, action) => {
     switch (action.type) {
         case DO_LOGIN:
             return {
