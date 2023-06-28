@@ -11,6 +11,12 @@ import ButtonTabNavigator from "./BottomTabNavigator";
 import ExploreSearch from "../views/ExploreView/ExploreSearch";
 import ShiptoScreen from "../views/CartView/components/ShipToScreen";
 import AddressShip from "../views/CartView/components/AddressShipScreen";
+import PaymentScreen from "../views/CartView/components/PaymentScreen";
+import ChooseCard from "../views/CartView/components/ChooseCard";
+import OrderSuccess from "../views/CartView/components/OrderSuccess";
+import ProfileScreen from "../views/AccountView/components/ProfileScreen";
+import ProfileName from "../views/AccountView/components/ProfileName";
+import ProfileGender from "../views/AccountView/components/ProfileGender";
 
 const Stack = createStackNavigator();
 
@@ -108,6 +114,60 @@ const AuthNavigator = () => {
       <Stack.Screen
         name={ROUTES.ADDRESS_SHIP}
         component={AddressShip}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PAYMENT}
+        component={PaymentScreen}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CHOOSE_CARD}
+        component={ChooseCard}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.ORDER_SUCCESS}
+        component={OrderSuccess}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE}
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE_NAME}
+        component={ProfileName}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE_GENDER}
+        component={ProfileGender}
         options={{
           headerShown: false,
           gestureEnabled: false,

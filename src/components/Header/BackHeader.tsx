@@ -22,7 +22,15 @@ const BackHeader = ({
                 }
                 goBackHandle && goBackHandle();
             }}>
-                <ICBack />
+                <View style={{
+                    width: widthPixel(30),
+                    height: heightPixel(30),
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+
+                    <ICBack />
+                </View>
             </TouchableOpacity>
             <Text style={styles.txtTileHeader}>{title}</Text>
             {children && children}

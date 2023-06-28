@@ -14,4 +14,9 @@ export const ROUTES = {
     SHIP_TO: 'Ship To',
     ADDRESS_SHIP: 'Address Ship',
     PAYMENT: 'Payment',
+    CHOOSE_CARD: 'Choose Card',
+    ORDER_SUCCESS: 'Order Success',
+    PROFILE: 'Profile',
+    PROFILE_NAME: 'Name',
+    PROFILE_GENDER: 'Gender',
 }

@@ -28,4 +28,16 @@ export const defaultStyle = StyleSheet.create({
         fontWeight: '400',
         color: AppEComm.color.text,
     },
+    emptyContainer: {
+        marginRight: heightPixel(16),
+    },
+    flexRowStart: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    flexCenter: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 })

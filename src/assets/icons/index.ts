@@ -33,6 +33,19 @@ export const IcMinus = require('./ic_minus.svg').default;
 export const IcPlus = require('./ic_plus.svg').default;
 export const IcFaviousActive = require('./ic_favious_active.svg').default;
 export const ICAddressActive = require('./ic_plus_add_shiptop_active.svg').default;
+export const ICAddCamera = require('./ic_add_camera.svg').default;
+export const ICCreaditCard = require('./ic_credit_card.svg').default;
+export const ICPaypal = require('./ic_paypal.svg').default;
+export const ICBank = require('./ic_bank.svg').default;
+export const ICSuccess = require('./ic_success.svg').default;
+export const ICBag = require('./ic_bag.svg').default;
+export const ICLocation = require('./ic_location.svg').default;
+export const ICGender = require('./ic_gender.svg').default;
+export const ICDate = require('./ic_date.svg').default;
+export const ICPhone = require('./ic_phone.svg').default;
+export const ICNextRight = require('./ic_next_right.svg').default;
+
+
 
 
 //Category
@@ -49,7 +62,6 @@ export const ICCategoryWomenBag = require('./ic_category_women_bag.svg').default
 export const ICCategoryWomenPants = require('./ic_category_women_pants.svg').default;
 export const ICCategoryWomenTShirt = require('./ic_category_women_tshirt.svg').default;
 export const ICCategoryWorkEquipment = require('./ic_category_work_equipment.svg').default;
-export const ICAddCamera = require('./ic_add_camera.svg').default;
 
 
 
@@ -59,3 +71,5 @@ export const ImageBackgroundHome = require('../images/imageBackground.png');
 export const ICUser = require('../images/Ic_User.png');
 export const ImageShose = require('../images/image_shose.png');
 export const ImageTransport = require('../images/image_transport.png');
+export const ImagePromotion = require('../images/image_promotion.png');
+export const ImageProfile = require('../images/image_Profile.png');

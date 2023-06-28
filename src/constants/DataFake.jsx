@@ -1,4 +1,5 @@
 import {
+  ICBank,
   ICCategoryBikini,
   ICCategoryDress,
   ICCategoryHighHeels,
@@ -12,6 +13,8 @@ import {
   ICCategoryWomenPants,
   ICCategoryWomenTShirt,
   ICCategoryWorkEquipment,
+  ICCreaditCard,
+  ICPaypal,
 } from "../assets/icons/index";
 export const DataCategory = [
   { id: 1, image: <ICCategoryShirt />, title: "Shirt", man: true },
@@ -43,3 +46,9 @@ export const DataCategory = [
     man: true,
   },
 ];
+
+export const PaymentFake = [
+  {id: 1, image: <ICCreaditCard/>, title: 'Credit Card Or Debit'},
+  {id: 1, image: <ICPaypal/>, title: 'Paypal'},
+  {id: 1, image: <ICBank/>, title: 'Bank Transfer'},
+]

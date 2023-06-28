@@ -29,9 +29,9 @@ const ContainerComponent: FC<ContainerProps> = ({
 }) => {
     const getBorderColor = (isFocused: any, error: any) => {
         if (!isFocused) {
-            return Boolean(error) ? AppEComm.color.red : AppEComm.color.black;
+            return Boolean(error) ? AppEComm.color.danger : AppEComm.color.grayLight;
         }
-        return AppEComm.color.blue_001;
+        return AppEComm.color.gradientForm;
     };
     return (
 
@@ -41,9 +41,6 @@ const ContainerComponent: FC<ContainerProps> = ({
                     styles.userInputWrap,
                     {
                         borderColor: getBorderColor(isFocused, error),
-                        backgroundColor: Boolean(error)
-                            ? AppEComm.color.white
-                            : AppEComm.color.white
                     },
                     containerStyle,
                 ]}>

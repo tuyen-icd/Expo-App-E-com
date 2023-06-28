@@ -10,9 +10,10 @@ import Spacer from '../../../components/Spacer'
 import { checkValidateStringField } from '../../../ultils/CheckValidateInput'
 import { useDispatch } from 'react-redux'
 import { getAddress } from '../../../redux/actions/AddressAction'
+import { useNavigation } from '@react-navigation/native'
 
 const AddressShip = () => {
-
+    const navigation = useNavigation();
     const dispatch = useDispatch();
 
     const [formAddressState, setFormAddressState] = useState<any>({
@@ -20,6 +21,9 @@ const AddressShip = () => {
         address: { value: "", error: null as null | { message: string } },
         phone: { value: "", error: null as null | { message: string } },
     });
+    const [address, setAddress] = useState<any[]>([]);
+
+    console.log('address :>> ', address);
 
     const checkValidateFormAddress = () => {
         const errorName = checkValidateStringField(formAddressState.name.value);
@@ -48,31 +52,47 @@ const AddressShip = () => {
 
     };
 
-    const submitForm = () => {
-        if (checkValidateFormAddress()) {
-            const dataAddress = []; // Create an array to hold the objects
+    const handleSubmit = () => {
+        const isValid = checkValidateFormAddress();
+        if (isValid) {
+            const newAddress = {
+                name: formAddressState.name.value,
+                address: formAddressState.address.value,
+                phone: formAddressState.phone.value,
+            };
+            setAddress(prevAddress => [...prevAddress, newAddress]);
 
-            // Iterate over the fields in formAddressState
-            for (const key in formAddressState) {
-                if (Object.prototype.hasOwnProperty.call(formAddressState, key)) {
-                    const { value } = formAddressState[key];
-                    const newDataObject = {
-                        name: value,
-                        address: formAddressState.address.value,
-                        phone: formAddressState.phone.value,
-                    };
+            dispatch(
+                getAddress({
+                    dataAddress: address,
+                })
+            )
 
-                    dataAddress.push(newDataObject); // Add the new object to the array
-                }
-            }
+            setFormAddressState({
+                name: { value: "", error: null },
+                address: { value: "", error: null },
+                phone: { value: "", error: null }
+            })
 
-            // Perform further actions with the dataAddress array, such as submitting it to a server
-
-            dispatch(getAddress({
-                dataAddress: dataAddress
-            }))
+            navigation.goBack()
         }
     };
+
+    // const onSubmitEdit = (editedAddress) => {
+    //     const updatedAddresses = addresses.map(address => {
+    //         if (address.id === editedAddress.id) {
+    //             return {
+    //                 ...address,
+    //                 name: editedAddress.name,
+    //                 address: editedAddress.address,
+    //                 phone: editedAddress.phone
+    //             };
+    //         }
+    //         return address;
+    //     });
+
+    //     setAddresses(updatedAddresses);
+    // };
 
     return (
         <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
@@ -147,7 +167,7 @@ const AddressShip = () => {
                 <Button
                     text="Add Address"
                     buttonSize="Medium"
-                    onPress={() => submitForm()}
+                    onPress={() => handleSubmit()}
                 />
             </View>
 

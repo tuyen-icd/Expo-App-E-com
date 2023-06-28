@@ -81,8 +81,8 @@ export const TxtInput: FC<TxtInputProps> = ({
                     }
                 }}
                 onSubmitEditing={onSubmitEditing}
-                keyboardType={keyboardType}
-                returnKeyType={returnKeyType}
+                keyboardType={keyboardType} //Xác định bàn phím nào sẽ mở, ví dụ: numeric.
+                returnKeyType={returnKeyType} //Xác định giao diện của phím quay lại.(Done, go, next, search, send)
                 maxLength={maxLength}
             />
         </ContainerComponent>

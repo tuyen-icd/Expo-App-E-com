@@ -33,5 +33,15 @@ export const styles = StyleSheet.create({
         fontSize: fontPixel(14),
         color: AppEComm.color.placeholderColor,
     },
+    pickerWrap: {
+        marginLeft: pixelSizeHorizontal(14),
+        flexDirection: 'column',
+        justifyContent: 'center',
+        flex: 1,
+        height: '100%',
+    },
+    pickerText: {
+        ...defaultStyle.body,
+    },
 })
 
