@@ -5,13 +5,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { DataCategory } from "../../constants/DataFake";
 import ItemCategory from "./ItemCategory";
 import { AppEComm } from "../../constants/colors";
 import { fontPixel, heightPixel } from "../../ultils/scanling";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
+import axios from "axios";
+import { API_ALL_CATEGORY } from "../../configs";
 
 interface CategoryProps {
   flag: boolean;
@@ -19,6 +21,12 @@ interface CategoryProps {
 
 const Category: FC<CategoryProps> = ({ flag }) => {
   const navigation = useNavigation()
+  const [dataCategory, getDataCategory] = useState<any>([]);
+
+  useEffect(() => {
+    const categoryAll = axios.get(API_ALL_CATEGORY).then(response => getDataCategory(response.data))
+  }, [])
+
   return (
     <View style={[styles.container]}>
       <View style={styles.category}>
@@ -39,9 +47,9 @@ const Category: FC<CategoryProps> = ({ flag }) => {
         )}
 
         <FlatList
-          data={DataCategory}
+          data={dataCategory}
           renderItem={({ item }) => (
-            <ItemCategory title={item.title} id={item.id} image={item.image} flag={flag} />
+            <ItemCategory dataCategory={item} flag={flag} />
           )}
           horizontal={flag ? true : false}
           keyExtractor={(item, index) => index.toString()}

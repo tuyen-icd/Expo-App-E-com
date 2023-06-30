@@ -17,6 +17,11 @@ import OrderSuccess from "../views/CartView/components/OrderSuccess";
 import ProfileScreen from "../views/AccountView/components/ProfileScreen";
 import ProfileName from "../views/AccountView/components/ProfileName";
 import ProfileGender from "../views/AccountView/components/ProfileGender";
+import ProfileBrithday from "../views/AccountView/components/ProfileBrithday";
+import ProfileEmail from "../views/AccountView/components/ProfileEmail";
+import ProfilePhone from "../views/AccountView/components/ProfilePhone";
+import ProfileChangePassword from "../views/AccountView/components/ProfileChangePassword";
+import ProductsOfCategory from "../components/ProductOfCategoryScreen/ProductsOfCategory";
 
 const Stack = createStackNavigator();
 
@@ -103,6 +108,16 @@ const AuthNavigator = () => {
       />
 
       <Stack.Screen
+        name={ROUTES.PRODUCTS_CATEGORY}
+        component={ProductsOfCategory}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+
+      <Stack.Screen
         name={ROUTES.SHIP_TO}
         component={ShiptoScreen}
         options={{
@@ -168,6 +183,42 @@ const AuthNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE_GENDER}
         component={ProfileGender}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE_BIRTH_DAY}
+        component={ProfileBrithday}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE_EMAIL}
+        component={ProfileEmail}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE_PHONE}
+        component={ProfilePhone}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.PROFILE__CHANGE_PASSWORD}
+        component={ProfileChangePassword}
         options={{
           headerShown: false,
           gestureEnabled: false,

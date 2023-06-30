@@ -39,5 +39,17 @@ export const defaultStyle = StyleSheet.create({
     flexCenter: {
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    sub1: {
+        fontSize: fontPixel(16),
+        lineHeight: heightPixel(24),
+        fontWeight: '400',
+        color: AppEComm.color.text,
+    },
+    sub2: {
+        fontSize: fontPixel(16),
+        lineHeight: heightPixel(24),
+        fontWeight: '700',
+        color: AppEComm.color.text,
     }
 })

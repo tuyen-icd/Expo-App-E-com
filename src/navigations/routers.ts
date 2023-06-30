@@ -19,4 +19,9 @@ export const ROUTES = {
     PROFILE: 'Profile',
     PROFILE_NAME: 'Name',
     PROFILE_GENDER: 'Gender',
+    PROFILE_BIRTH_DAY: 'Birthday',
+    PROFILE_EMAIL: 'Email',
+    PROFILE_PHONE: 'Phone',
+    PROFILE__CHANGE_PASSWORD: 'Change Password',
+    PRODUCTS_CATEGORY: 'Products of Category',
 }

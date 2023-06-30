@@ -6,6 +6,7 @@ import { styles } from "./components/styles";
 import { heightPixel, pixelSizeHorizontal } from "../../ultils/scanling";
 import _ from "lodash";
 import { AppEComm } from "../../constants/colors";
+import Spacer from "../Spacer";
 
 export interface ContainerTextInputProps extends BaseProps {
     children?: ReactNode;

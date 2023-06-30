@@ -9,7 +9,8 @@ import { useNavigation } from '@react-navigation/native'
 import { capitalizeFirstLetter } from '../../ultils/CapitalizeFirstString'
 import axios from 'axios'
 import { ROUTES } from '../../navigations/routers'
-import App from '../../../App'
+import { Skeleton } from '@nlazzos/react-native-skeleton';
+import { ImageProduct } from '../../assets/icons'
 
 export interface ItemProductProps {
     dataProduct?: any,
@@ -48,43 +49,58 @@ const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discount
                         paddingBottom: tag ? heightPixel(12) : 0,
                     }]}
             >
-                <View
-                    style={[styles.itemProduct, {
-                        width: tag ? widthPixel(164) : widthPixel(141),
-                        height: tag ? heightPixel(282) : heightPixel(238),
-                    }]}>
-                    <Image
-                        style={[styles.imgProduct, {
-                            width: tag ? widthPixel(133) : widthPixel(109),
-                            height: tag ? heightPixel(133) : heightPixel(109),
-                        }]}
-                        source={{
-                            uri: thumbnail,
-                        }}
-                    />
-                    <Text style={styles.txtTitle}>{truncateString(capitalizeFirstLetter(title), 20)}</Text>
-                    <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        {
-                            tag ?
-                                <AirbnbRating
-                                    count={5}
-                                    showRating={false}
-                                    defaultRating={rating}
-                                    size={12}
-                                    isDisabled={true}
-                                    reviewColor='red'
-                                /> : ''
-                        }
-                    </View>
-                    <Text style={styles.txtPrice}>${Math.round(price * (100 - discountPercentage) / 100)}</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={styles.txtPriceDefault}>${price}</Text>
-                        <Text style={styles.txtDiscountPercentage}>{discountPercentage} Off</Text>
+                {
+                    !dataProduct ? <Skeleton
+                        style={{
+                            width: tag ? widthPixel(164) : widthPixel(141),
+                            height: tag ? heightPixel(238) : heightPixel(238),
+                        }} /> : <View
+                            style={[styles.itemProduct, {
+                                width: tag ? widthPixel(164) : widthPixel(141),
+                                height: tag ? heightPixel(282) : heightPixel(238),
+                            }]}>
+                        <Image
+                            style={[styles.imgProduct, {
+                                width: tag ? widthPixel(133) : widthPixel(109),
+                                height: tag ? heightPixel(133) : heightPixel(109),
+                            }]}
+                            source={{
+                                uri: thumbnail,
+                            }}
+                        />
+                        {/* <Image
+                            style={[styles.imgProduct, {
+                                width: tag ? widthPixel(133) : widthPixel(109),
+                                height: tag ? heightPixel(133) : heightPixel(109),
+                            }]}
+                            source={ImageProduct}
+                        /> */}
+                        <Text style={styles.txtTitle}>{truncateString(capitalizeFirstLetter(title), 20)}</Text>
+                        <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                            {
+                                tag ?
+                                    <AirbnbRating
+                                        count={5}
+                                        showRating={false}
+                                        defaultRating={rating}
+                                        size={12}
+                                        isDisabled={true}
+                                        reviewColor='red'
+                                    /> : ''
+                            }
+                        </View>
+                        <Text style={styles.txtPrice}>${price}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Text style={styles.txtPriceDefault}>${Math.round(dataProduct?.price / (1 - dataProduct?.discountPercentage / 100))}</Text>
+                            <Text style={styles.txtDiscountPercentage}> - ${Math.round((dataProduct?.price / (1 - dataProduct?.discountPercentage / 100)) - price)} Off</Text>
+                        </View>
+
                     </View>
 
-                </View>
+                }
+
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 

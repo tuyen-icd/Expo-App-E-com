@@ -8,6 +8,7 @@ import SliderImage from '../../components/SliderBox/SliderImage'
 import axios from 'axios'
 import ItemProduct from '../../components/ItemProduct/ItemProduct'
 import UserInput from '../../components/UserInput'
+import { Skeleton } from '@nlazzos/react-native-skeleton'
 
 const FlashSaleScreen = () => {
     const [searchTerm, setSearchTerm] = useState('')
@@ -57,16 +58,26 @@ const FlashSaleScreen = () => {
                                 />
                             </View>
                     }
-
                 </TouchableOpacity>
             </View>
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ paddingTop: heightPixel(16) }}>
-                        <SliderImage dataSliderCarousel={dataSliderCarousel} />
-                        <View style={{ position: 'absolute', top: '30%', left: widthPixel(24), width: widthPixel(209) }}>
-                            <Text style={styles.txtPositionBackGround}>Super Flash Sale 50% Off</Text>
-                        </View>
+                        {
+                            !dataSliderCarousel ?
+                                <Skeleton style={{
+                                    width: widthPixel(343),
+                                    height: heightPixel(206)
+                                }} /> :
+                                <View>
+                                    <SliderImage dataSliderCarousel={dataSliderCarousel} />
+                                    <View style={{ position: 'absolute', top: '30%', left: widthPixel(24), width: widthPixel(209) }}>
+                                        <Text style={styles.txtPositionBackGround}>Super Flash Sale 50% Off</Text>
+                                    </View>
+                                </View>
+                        }
+
+
                     </View>
 
                     <View style={{ marginTop: heightPixel(16), paddingBottom: heightPixel(150) }}>

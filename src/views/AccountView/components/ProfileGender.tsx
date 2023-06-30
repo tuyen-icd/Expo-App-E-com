@@ -1,13 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Spacer from '../../../components/Spacer';
 import { AppEComm } from '../../../constants/colors';
 import Button from '../../../components/Button/Button';
 import { widthPixel } from '../../../ultils/scanling';
 import BackHeader from '../../../components/Header/BackHeader';
 import { defaultStyle } from '../../../constants/defaultStyle';
+import UserInput from '../../../components/UserInput';
 
 const ProfileGender = () => {
+
+    const [chooseGender, getChooseGender] = useState('MALE');
+    const methodPickHandler = (data: string) => {
+        if (data === 'Male') {
+            getChooseGender('MALE');
+        }
+        if (data === 'Female') {
+            getChooseGender('FEMALE');
+        }
+        if (data === 'Orther') {
+            getChooseGender('ORTHER');
+        }
+    };
+
     return (
         <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
             <View style={defaultStyle.header}>
@@ -18,7 +33,14 @@ const ProfileGender = () => {
             </View>
             <View style={{ paddingHorizontal: widthPixel(16), flex: 1 }}>
                 <View style={{ paddingTop: 16 }}>
-
+                    <UserInput.Picker
+                        title={'Choose Gender'}
+                        data={['Male', 'Female', 'Other']}
+                        value={'Male'}
+                        containerStyle={{}}
+                        onPickedData={methodPickHandler}
+                        linearGradient={true}
+                    />
                 </View>
 
                 <View style={{

@@ -1,4 +1,4 @@
-import { FAILURE, GET_CART, SUCCESS } from "../actions/ActionTypes";
+import { ADD_TO_CART, FAILURE, SUCCESS } from "../actions/ActionTypes";
 
 const initialState = {
     pending: false,
@@ -7,21 +7,21 @@ const initialState = {
 };
 export default (state = initialState, action) => {
     switch (action.type) {
-        case GET_CART:
+        case ADD_TO_CART:
             return {
                 ...state,
                 pending: true,
                 data: null,
                 error: null,
             };
-        case GET_CART + SUCCESS:
+        case ADD_TO_CART + SUCCESS:
             return {
                 ...state,
                 pending: false,
                 data: action.payload,
                 error: null,
             };
-        case GET_CART + FAILURE:
+        case ADD_TO_CART + FAILURE:
             return {
                 ...state,
                 pending: false,

@@ -18,7 +18,6 @@ function* doLoginSaga(action) {
       },
     });
     const result = response.data;
-    console.log('result_LoginSaga :>> ', result);
     if (result) {
       yield put({
         type: DO_LOGIN + SUCCESS,

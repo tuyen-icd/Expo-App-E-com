@@ -1,13 +1,13 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { IcArrowDown } from '@assets/icons';
 import _ from 'lodash';
-import { ContainerProps, ContainerComponent } from './Container';
+import ContainerComponent, { ContainerProps, } from './Container';
 import { BaseProps } from './BaseProps';
 import { styles } from './styles';
-import BottomFlatPicker from '@components/BottomFlatPicker';
-import BottomWheelPicker from '@components/BottomWheelPicker';
-import { showError } from '@utils/Alert';
+import { ShowError } from '../../ultils/Alert';
+import BottomFlatPicker from './BottomFlatPicker';
+import { IcArrowDown } from '../../assets/icons';
+import BottomWheelPicker from './BottomWheelPicker';
 
 export interface PickerButtonProps extends ContainerProps {
     data?: any;
@@ -25,6 +25,7 @@ export interface PickerProps extends BaseProps {
     onPickedData?: (data: any) => void;
     isWheel?: boolean;
     disable?: boolean;
+    linearGradient?: boolean;
 }
 
 export const PickerButton: FC<PickerButtonProps> = (props: {
@@ -68,8 +69,9 @@ export const Picker: FC<PickerProps> = (props: {
     value?: any;
     onPickedData?: any;
     isWheel?: any;
+    linearGradient?: boolean
 }) => {
-    const { onPickedData, value, data, title, isWheel } = props;
+    const { onPickedData, value, data, title, isWheel, linearGradient } = props;
     const [pickedData, setPickedData] = useState(value);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -95,7 +97,7 @@ export const Picker: FC<PickerProps> = (props: {
                 isFocused={modalVisible}
                 onPress={() => {
                     if (data.length === 0) {
-                        showError('Không có dữ liệu');
+                        ShowError('Không có dữ liệu');
                         return;
                     }
                     setModalVisible(true);
@@ -111,6 +113,8 @@ export const Picker: FC<PickerProps> = (props: {
                     isVisible={modalVisible}
                     onCancel={handleCancel}
                     onConfirm={handleConfirm}
+                    linearGradient={linearGradient}
+
                 />
             )}
             {isWheel && data.length !== 0 && (

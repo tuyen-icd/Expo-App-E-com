@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { BaseProps } from "./BaseProps";
 import { AppEComm } from "../../constants/colors";
-import { TextInput } from "react-native";
+import { Keyboard, TextInput } from "react-native";
 import { styles } from "../Inputs/components/styles";
 import ContainerComponent from "./Container";
 
@@ -64,12 +64,12 @@ export const TxtInput: FC<TxtInputProps> = ({
                 blurOnSubmit={true}
                 value={value}
                 onBlur={() => {
-                    setIsFocused(false);
+                    setIsFocused(true);
                     if (onBlur) onBlur();
                 }}
                 onFocus={() => {
                     setIsFocused(true);
-                    onFocusTxtInput && onFocusTxtInput();
+                    onFocusTxtInput ? onFocusTxtInput() : null;
                 }}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"

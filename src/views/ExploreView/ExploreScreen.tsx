@@ -9,6 +9,7 @@ import Category from "../../components/Category/Category";
 import { AppEComm } from "../../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
+import Spacer from "../../components/Spacer";
 
 const ExploreScreen = () => {
   const navigation: any = useNavigation();
@@ -45,9 +46,14 @@ const ExploreScreen = () => {
       </View>
       <View style={[styles.container, { flex: 1 }]}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ paddingTop: heightPixel(16) }}>
+          <View style={{
+            paddingTop: heightPixel(16),
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
             <View style={{ flex: 1 }}>
               <Category flag={false} />
+              <Spacer height={150} />
             </View>
           </View>
         </ScrollView>

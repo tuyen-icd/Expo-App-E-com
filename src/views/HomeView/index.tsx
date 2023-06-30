@@ -7,7 +7,6 @@ export interface HomeScreenProps {
   route: any;
 }
 const HomeView: FC<HomeScreenProps> = ({ route }) => {
-  console.log("route_ Home_View :>> ", route);
   return (
     <View style={defaultStyle.containerWithHeader}>
       <HomeScreen />

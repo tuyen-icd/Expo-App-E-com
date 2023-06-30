@@ -13,24 +13,28 @@ import MegaSale from "../../components/MegaSale/MegaSale";
 import ItemProduct from "../../components/ItemProduct/ItemProduct";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
+import { API_FLASH_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER } from "../../configs";
+import Loader from "../../components/Loader";
+import { Skeleton } from '@nlazzos/react-native-skeleton';
+import Spacer from "../../components/Spacer";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
+  const [isLoading, setIsLoading] = useState(false)
   const [txtSearch, setTxtSearch] = useState("");
   const [flashSale, setFlashSale] = useState([]);
   const [dataSliderCarousel, setDataSliderCarousel] = useState([]);
   const [dataProductBottom, setDataProductBottom] = useState<any[]>([]);
+
   useEffect(() => {
     const dataFlashSale = axios
-      .get(
-        "https://dummyjson.com/products?limit=10&skip=35&select=id,title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images"
-      )
+      .get(API_FLASH_SALE)
       .then((response) => {
         setFlashSale(response.data.products);
       });
 
     const dataSlider = axios
-      .get("https://dummyjson.com/products?limit=5&skip=1&select=thumbnail")
+      .get(API_SLIDER)
       .then((response) => {
         const result = response.data.products.map(
           (item: { thumbnail: string }) => item.thumbnail
@@ -39,9 +43,7 @@ const HomeScreen = () => {
       });
 
     const dataProductBottom = axios
-      .get(
-        "https://dummyjson.com/products?limit=10&skip=32&select=id,title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images"
-      )
+      .get(API_PRODUCT_BOTTOM_HOME)
       .then((response) => {
         setDataProductBottom(response.data.products);
       });
@@ -58,6 +60,7 @@ const HomeScreen = () => {
     return;
   };
   return (
+
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
         <View style={styles.emptyContainer}>
@@ -76,20 +79,30 @@ const HomeScreen = () => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ paddingTop: heightPixel(16) }}>
-            <SliderImage dataSliderCarousel={dataSliderCarousel} />
-            <View
-              style={{
-                position: "absolute",
-                top: "30%",
-                left: widthPixel(24),
-                width: widthPixel(209),
-              }}
-            >
-              <Text style={styles.txtPositionBackGround}>
-                Super Flash Sale 50% Off
-              </Text>
-            </View>
+            {
+              !dataSliderCarousel ?
+                <Skeleton
+                  style={{
+                    height: heightPixel(206),
+                    borderRadius: 5,
+                  }} /> : <View>
+                  <SliderImage dataSliderCarousel={dataSliderCarousel} />
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: "30%",
+                      left: widthPixel(24),
+                      width: widthPixel(209),
+                    }}
+                  >
+                    <Text style={styles.txtPositionBackGround}>
+                      Super Flash Sale 50% Off
+                    </Text>
+                  </View>
+                </View>
+            }
           </View>
+          <Spacer height={20} />
           <View>
             <Category flag={true} />
           </View>
@@ -143,6 +156,7 @@ const HomeScreen = () => {
             />
           </View>
         </ScrollView>
+        <Loader isVisible={isLoading} />
       </View>
     </View>
   );

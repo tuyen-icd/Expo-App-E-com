@@ -6,6 +6,7 @@ import { fontPixel, heightPixel } from '../../ultils/scanling'
 import ItemProduct from '../ItemProduct/ItemProduct'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../navigations/routers'
+import { SkeletonContainer } from '@nlazzos/react-native-skeleton'
 
 
 const FlashSale = (flashSale: any) => {
@@ -25,22 +26,24 @@ const FlashSale = (flashSale: any) => {
                         <Text style={styles.txtMoreCategory}>See More</Text>
                     </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={flashSale.flashSale}
-                    renderItem={({ item }) =>
-                        < ItemProduct
-                            id={item.id}
-                            title={item.title}
-                            price={item.price}
-                            discountPercentage={item.discountPercentage}
-                            thumbnail={item.thumbnail}
-                            dataProduct={item}
-                        />
-                    }
-                    horizontal={true}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                />
+                <SkeletonContainer>
+                    <FlatList
+                        data={flashSale.flashSale}
+                        renderItem={({ item }) =>
+                            < ItemProduct
+                                id={item.id}
+                                title={item.title}
+                                price={item.price}
+                                discountPercentage={item.discountPercentage}
+                                thumbnail={item.thumbnail}
+                                dataProduct={item}
+                            />
+                        }
+                        horizontal={true}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                </SkeletonContainer>
             </View>
         </View>
     )

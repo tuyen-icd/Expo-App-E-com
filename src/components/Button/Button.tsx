@@ -21,10 +21,11 @@ interface ButtonProps {
     textStyle?: any;
     iconStyles?: any;
     buttonStyles?: any;
-    onPress: () => void;
+    onPress?: () => void;
     leftComponent?: (iconStyles: any) => any;
     children?: JSX.Element | JSX.Element[];
     containerStyle?: any,
+    linearGradient?: any,
 }
 
 const Button: FC<ButtonProps> = ({
@@ -37,13 +38,14 @@ const Button: FC<ButtonProps> = ({
     leftComponent,
     onPress,
     containerStyle,
+    linearGradient
 }) => {
     const largeHeight = heightPixel(60);
     const largeWidth = widthPixel(44);
     return (
         <View style={[styles.btnWrapper, containerStyle]}>
             <LinearGradient
-                colors={[AppEComm.color.blue_001, AppEComm.color.blue_001]}
+                colors={!linearGradient ? [AppEComm.color.blue_001, AppEComm.color.blue_001] : ['transparent', 'transparent']}
                 style={styles.linearGradient}
                 start={{ y: 0.0, x: 0.0 }}
                 end={{ y: 1.0, x: 0.0 }}

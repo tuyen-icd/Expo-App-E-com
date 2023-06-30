@@ -4,7 +4,7 @@ import { fontPixel, heightPixel, widthPixel } from '../../../ultils/scanling'
 import { defaultStyle } from '../../../constants/defaultStyle'
 import { AppEComm } from '../../../constants/colors'
 import BackHeader from '../../../components/Header/BackHeader'
-import { ICDate, ICEmailLight, ICGender, ICNextRight, ICPasswordActive, ICPhone, ImageProfile } from '../../../assets/icons'
+import { ICDateActive, ICEmailLight, ICGender, ICNextRight, ICPasswordActive, ICPhone, IcPhoneActiveV, ImageProfile } from '../../../assets/icons'
 import Spacer from '../../../components/Spacer'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../../navigations/routers'
@@ -46,11 +46,11 @@ const ProfileScreen = () => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE_BIRTH_DAY as never)}>
                         <View style={[defaultStyle.flexJustify, { paddingVertical: 16 }]}>
                             <View style={[defaultStyle.flexRowStart, { gap: 16 }]}>
                                 <View style={[defaultStyle.flexCenter, { width: widthPixel(30) }]}>
-                                    <ICDate />
+                                    <ICDateActive />
                                 </View>
                                 <Text style={styles.txtTitle}>Birthday</Text>
                             </View>
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE_EMAIL as never)}>
                         <View style={[defaultStyle.flexJustify, { paddingVertical: 16 }]}>
                             <View style={[defaultStyle.flexRowStart, { gap: 16 }]}>
                                 <View style={[defaultStyle.flexCenter, { width: widthPixel(30) }]}>
@@ -74,11 +74,11 @@ const ProfileScreen = () => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE_PHONE as never)}>
                         <View style={[defaultStyle.flexJustify, { paddingVertical: 16 }]}>
                             <View style={[defaultStyle.flexRowStart, { gap: 16 }]}>
                                 <View style={[defaultStyle.flexCenter, { width: widthPixel(30) }]}>
-                                    <ICPhone />
+                                    <IcPhoneActiveV />
                                 </View>
                                 <Text style={styles.txtTitle}>Phone Number</Text>
                             </View>
@@ -88,7 +88,7 @@ const ProfileScreen = () => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE__CHANGE_PASSWORD as never)}>
                         <View style={[defaultStyle.flexJustify, { paddingVertical: 16 }]}>
                             <View style={[defaultStyle.flexRowStart, { gap: 16 }]}>
                                 <View style={[defaultStyle.flexCenter, { width: widthPixel(30) }]}>

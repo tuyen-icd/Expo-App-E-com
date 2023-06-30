@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { Platform, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import Button from '../Button/Button';
 import { AppEComm } from '../../constants/colors';
 import { fontPixel, heightPixel, pixelSizeHorizontal, pixelSizeVertical, widthPixel } from '../../ultils/scanling';
 import { defaultStyle } from '../../constants/defaultStyle';
+import Spacer from '../Spacer';
 
 
 
@@ -14,7 +15,8 @@ interface BottomFlatPickerProps {
     defaultValue?: string;
     isVisible?: boolean;
     onCancel?: () => void;
-    onConfirm?: (value: any) => void;
+    onConfirm?: ((value: any) => void) | undefined;
+    linearGradient?: boolean;
 }
 
 const BottomFlatPicker: FC<BottomFlatPickerProps> = ({
@@ -23,13 +25,14 @@ const BottomFlatPicker: FC<BottomFlatPickerProps> = ({
     isVisible,
     onCancel,
     onConfirm,
+    linearGradient,
 }) => {
     return (
         <Modal backdropOpacity={0.3} isVisible={isVisible} style={styles.bottomModelContain}>
             <View style={styles.contain}>
                 <View style={styles.topContain}>
                     <View style={styles.pickItem}>
-                        <Text style={[styles.title]}>{title}</Text>
+                        <Text style={[defaultStyle.sub2, styles.title]}>{title}</Text>
                     </View>
                     {data?.map((value, i) => (
                         <TouchableOpacity
@@ -38,7 +41,7 @@ const BottomFlatPicker: FC<BottomFlatPickerProps> = ({
                                 onConfirm(data[i]);
                             }}>
                             <View style={styles.pickItem}>
-                                <Text style={{}}>{value}</Text>
+                                <Text style={defaultStyle.sub1}>{value}</Text>
                             </View>
                         </TouchableOpacity>
                     ))}
@@ -49,8 +52,11 @@ const BottomFlatPicker: FC<BottomFlatPickerProps> = ({
                     buttonSize="Medium"
                     onPress={onCancel}
                     buttonStyles={{ ...styles.buttonStyle }}
-                    textStyle={{ ...defaultStyle.sub1 }}
+                    textStyle={{ ...defaultStyle.sub2 }}
+                    linearGradient={linearGradient}
                 />
+                <Spacer height={25} />
+
             </View>
         </Modal>
     );
@@ -64,17 +70,17 @@ const styles = StyleSheet.create({
         margin: 0,
     },
     buttonStyle: {
-        backgroundColor: AppEComm.color.blue_001,
+        backgroundColor: AppEComm.color.white,
         height: heightPixel(50),
         marginTop: heightPixel(7.5),
         borderRadius: 10,
     },
     itemStyle: {
-        color: AppEComm.color.black,
+        color: AppEComm.color.red,
         fontSize: fontPixel(22),
     },
     topContain: {
-        backgroundColor: AppEComm.color.blue_001,
+        backgroundColor: AppEComm.color.white,
         borderRadius: 10,
     },
     contain: {

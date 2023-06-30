@@ -1,30 +1,21 @@
-import { DECREMENT, GET_CART, INCREMENT, REMOVE_ITEM_CART } from "./ActionTypes"
+import { ADD_TO_CART, FAILURE, SUCCESS } from "./ActionTypes";
 
-export const getCartAction = (id, callback = (error, data) => { }) => {
-    return {
-        type: GET_CART,
-        payload: id,
-        callback,
-    }
-}
+export const addToCart = (payload, callback = (error, data) => {}) => ({
+    type: ADD_TO_CART,
+    payload,
+    callback,
+});
 
-export const removeCart = (id) => {
+export const addToCartSuccess = payload => {
     return {
-        type: REMOVE_ITEM_CART,
-        payload: id,
-    }
-}
+        type: ADD_TO_CART + SUCCESS,
+        payload,
+    };
+};
 
-export const increase = (id) => {
+export const addToCartFailure = payload => {
     return {
-        type: INCREMENT,
-        payload: id,
-    }
-}
-
-export const decrease = (id) => {
-    return {
-        type: DECREMENT,
-        pyaload: id,
-    }
-}
+        type: ADD_TO_CART + FAILURE,
+        payload,
+    };
+};

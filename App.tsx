@@ -4,14 +4,18 @@ import { StyleSheet } from 'react-native';
 import AuthNavigator from './src/navigations/AuthNavigator';
 import { Provider } from 'react-redux';
 import store from './src/redux/Store';
+import { SkeletonContainer } from "@nlazzos/react-native-skeleton";
+import { AppEComm } from './src/constants/colors';
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <AuthNavigator />
-      </NavigationContainer>
-    </Provider>
+    <SkeletonContainer backgroundColor={AppEComm.color.borderColor}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <AuthNavigator />
+        </NavigationContainer>
+      </Provider>
+    </SkeletonContainer>
   );
 }
 

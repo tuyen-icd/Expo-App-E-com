@@ -41,9 +41,14 @@ export const ICSuccess = require('./ic_success.svg').default;
 export const ICBag = require('./ic_bag.svg').default;
 export const ICLocation = require('./ic_location.svg').default;
 export const ICGender = require('./ic_gender.svg').default;
+export const ICDateActive = require('./ic_date_active.svg').default;
 export const ICDate = require('./ic_date.svg').default;
-export const ICPhone = require('./ic_phone.svg').default;
+export const IcPhoneActiveV = require('./ic_phone_active.svg').default;
+export const IcPhoneV = require('./ic_phoneV.svg').default;
 export const ICNextRight = require('./ic_next_right.svg').default;
+export const IcArrowDown = require('./ic_arrow_down.svg').default;
+export const IcCalendar = require('./ic_calendar.svg').default;
+export const IcCalendarActive = require('./ic_calendar_active.svg').default;
 
 
 
@@ -73,3 +78,4 @@ export const ImageShose = require('../images/image_shose.png');
 export const ImageTransport = require('../images/image_transport.png');
 export const ImagePromotion = require('../images/image_promotion.png');
 export const ImageProfile = require('../images/image_Profile.png');
+export const ImageProduct = require('../images/image_product.png');

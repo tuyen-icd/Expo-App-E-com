@@ -8,9 +8,9 @@ export const SizeAPI = [
 
 export const SelectColor = [
     { id: 1, color: '#FFC833' },
-    { id: 1, color: '#40BFFF' },
-    { id: 1, color: '#FB7181' },
-    { id: 1, color: '#53D1B6' },
-    { id: 1, color: '#5C61F4' },
-    { id: 1, color: '#223263' },
+    { id: 2, color: '#40BFFF' },
+    { id: 3, color: '#FB7181' },
+    { id: 4, color: '#53D1B6' },
+    { id: 5, color: '#5C61F4' },
+    { id: 6, color: '#223263' },
 ]

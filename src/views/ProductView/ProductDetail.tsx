@@ -2,7 +2,7 @@ import { FlatList, Platform, ScrollView, StyleSheet, Text, View } from 'react-na
 import React, { FC, useEffect, useState } from 'react'
 import BackHeader from '../../components/Header/BackHeader'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ICExplore, ICExploreActive, ICFavious, IcFaviousActive } from '../../assets/icons';
+import { ICExplore, ICFavious, IcFaviousActive } from '../../assets/icons';
 import UserInput from '../../components/UserInput';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
@@ -17,6 +17,9 @@ import ItemProduct from '../../components/ItemProduct/ItemProduct';
 import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../redux/actions/CartAction';
+import { AppState } from '../../redux/reducers/RootReducer';
 
 
 interface ProductDetailProps {
@@ -25,16 +28,20 @@ interface ProductDetailProps {
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
 
+    const dispatch = useDispatch();
     const navigation: any = useNavigation();
-
-    // const {data: }
+    const { data } = useSelector((state: AppState) => state.authReducer);
+    const userId = data?.result?.id;
+    console.log('data :>> ', data);
+    console.log('userId :>> ', userId);
 
     const { dataProduct, getPostComment } = route.params;
     const imageCaroselProduct = dataProduct?.images;
     const [flagSearch, setFlagSearch] = useState(false);
     const [alsoLike, setAlsoLike] = useState();
     const [favious, setFavious] = useState(false);
-    // console.log('data cua product detail :>> ', dataProduct);
+    const [selectedSizeItem, setSelectedSizeItem] = useState<number | null>(1);
+    const [selectColorItem, setSelectColorItem] = useState<number | null>(1);
 
     //Only New ElementReview
 
@@ -51,10 +58,14 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
             .catch((error) => console.log(error))
     }
 
-    const addProductToCart = (objectId: number) => {
-        console.log('addProductToCart :>> ', objectId);
-
+    const addProductToCart = (dataProduct: any) => {
+        dispatch(addToCart({
+            userId: userId,
+            productId: dataProduct.id,
+            quantity: 1
+        }))
     }
+
     return (
         <View style={{ backgroundColor: AppEComm.color.white, flex: 1 }}>
             <View style={styles.header}>
@@ -102,15 +113,20 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                         </View>
 
                         <Text style={[styles.txtPrice, { paddingTop: heightPixel(16) }]}>
-                            ${Math.round(dataProduct?.price * (100 - dataProduct?.discountPercentage) / 100)}
+                            ${Math.round(dataProduct?.price)}
                         </Text>
                         <View style={{ flex: 1, paddingVertical: heightPixel(24) }}>
                             <Text style={[styles.txtSmall, { paddingBottom: heightPixel(12) }]}>Select Size</Text>
                             <FlatList
                                 data={SizeAPI}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => console.log("TEST SIZE", item)}>
-                                        <View style={styles.borderSize}>
+                                    <TouchableOpacity onPress={() => { setSelectedSizeItem(item.id) }}>
+                                        <View style={[styles.borderSize,
+                                        {
+                                            borderColor: selectedSizeItem === item.id
+                                                ? AppEComm.color.blue_001
+                                                : AppEComm.color.borderColor,
+                                        }]}>
                                             <Text
                                                 style={{
                                                     fontSize: fontPixel(14),
@@ -138,16 +154,38 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                 showsHorizontalScrollIndicator={false}
                                 scrollEnabled={true}
                                 renderItem={({ item }) => (
-                                    <View style={{ paddingRight: 16 }}>
-                                        <View style={{
-                                            backgroundColor: `${item.color}`,
-                                            width: widthPixel(48),
-                                            height: heightPixel(48),
-                                            borderRadius: 100,
-                                        }}>
-
+                                    <TouchableOpacity onPress={() => setSelectColorItem(item.id)}>
+                                        <View style={{ paddingRight: 16 }}>
+                                            <View style={{
+                                                backgroundColor: `${item.color}`,
+                                                width: widthPixel(48),
+                                                height: heightPixel(48),
+                                                borderRadius: 100,
+                                                flex: 1,
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}>
+                                                {selectColorItem === item.id && (
+                                                    <View
+                                                        style={{
+                                                            width: 10,
+                                                            height: 10,
+                                                            borderRadius: 100,
+                                                            backgroundColor: '#FFFFFF',
+                                                            shadowColor: '#000',
+                                                            shadowOffset: {
+                                                                width: 0,
+                                                                height: 2,
+                                                            },
+                                                            shadowOpacity: 0.4,
+                                                            shadowRadius: 3,
+                                                            elevation: 5,
+                                                        }}
+                                                    />
+                                                )}
+                                            </View>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 )}
                                 keyExtractor={(item, index) => index.toString()}
                             />
@@ -221,7 +259,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                 <Button
                     text="Add To Cart"
                     buttonSize="Medium"
-                    onPress={() => addProductToCart(dataProduct.id)}
+                    onPress={() => addProductToCart(dataProduct)}
                 />
             </View >
         </View >
@@ -277,7 +315,6 @@ const styles = StyleSheet.create({
     borderSize: {
         borderRadius: 100,
         borderWidth: widthPixel(1.5),
-        borderColor: AppEComm.color.borderColor,
         height: heightPixel(48),
         width: widthPixel(48),
         marginRight: 16,
