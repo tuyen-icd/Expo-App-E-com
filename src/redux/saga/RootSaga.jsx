@@ -9,6 +9,6 @@ export function* rootSaga() {
         fork(authSaga),
         fork(productSaga),
         fork(addressSaga),
-        // fork(cartSaga),
+        fork(cartSaga),
     ]);
 }

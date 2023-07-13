@@ -32,8 +32,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     const navigation: any = useNavigation();
     const { data } = useSelector((state: AppState) => state.authReducer);
     const userId = data?.result?.id;
-    console.log('data :>> ', data);
-    console.log('userId :>> ', userId);
 
     const { dataProduct, getPostComment } = route.params;
     const imageCaroselProduct = dataProduct?.images;
@@ -59,11 +57,11 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     }
 
     const addProductToCart = (dataProduct: any) => {
-        dispatch(addToCart({
-            userId: userId,
-            productId: dataProduct.id,
+        const product = {
+            id: dataProduct.id,
             quantity: 1
-        }))
+        }
+        dispatch(addToCart(product));
     }
 
     return (

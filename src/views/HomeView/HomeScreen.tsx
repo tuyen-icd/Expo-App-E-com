@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, FlatList } from "react-native";
+import { View, Text, ScrollView, Button, Image, FlatList } from "react-native";
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { styles } from "./styles";
@@ -25,6 +25,32 @@ const HomeScreen = () => {
   const [flashSale, setFlashSale] = useState([]);
   const [dataSliderCarousel, setDataSliderCarousel] = useState([]);
   const [dataProductBottom, setDataProductBottom] = useState<any[]>([]);
+  const [products, setProducts] = useState<any>([]);
+  const [page, setPage] = useState(10);
+
+  const loadProducts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`https://dummyjson.com/products?limit=${page}&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`);
+      console.log('response_Home :>> ', response.data);
+      const data = response.data.products;
+      if (data.length > 0) {
+        setProducts([...products, ...data]);
+        setPage(page + 10);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false)
+  };
+
+  const handleLoadMore = () => {
+    loadProducts();
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, [])
 
   useEffect(() => {
     const dataFlashSale = axios
@@ -135,7 +161,7 @@ const HomeScreen = () => {
 
           <View style={{ paddingBottom: heightPixel(250) }}>
             <FlatList
-              data={dataProductBottom}
+              data={products}
               renderItem={({ item }) => (
                 <ItemProduct
                   id={item?.id}
@@ -148,12 +174,14 @@ const HomeScreen = () => {
                   tag={true}
                 />
               )}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReachedThreshold={0.5}
               horizontal={false}
               scrollEnabled={false}
               showsVerticalScrollIndicator={false}
               numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
             />
+            <Button title="More" onPress={handleLoadMore} />
           </View>
         </ScrollView>
         <Loader isVisible={isLoading} />
