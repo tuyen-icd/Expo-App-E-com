@@ -32,7 +32,7 @@ const HomeScreen = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://dummyjson.com/products?limit=${page}&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`);
-      console.log('response_Home :>> ', response.data);
+      // console.log('response_Home :>> ', response.data);
       const data = response.data.products;
       if (data.length > 0) {
         setProducts([...products, ...data]);

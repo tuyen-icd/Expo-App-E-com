@@ -9,9 +9,13 @@ import UserInput from '../../components/UserInput'
 import { ICExploreActive } from '../../assets/icons'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../navigations/routers'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../redux/reducers/RootReducer'
 
 const CartScreen = () => {
     const navigation = useNavigation();
+    const { data } = useSelector((state: AppState) => state.cartReducer);
+    console.log('data_cart_screen :>> ', data);
     const [cuponCode, setCuponCode] = useState('');
     const handleSreachTermChange = (e: string) => {
         setCuponCode(e);

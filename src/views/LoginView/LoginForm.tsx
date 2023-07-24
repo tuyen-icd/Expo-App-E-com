@@ -1,5 +1,5 @@
 import { Alert, Keyboard, Text, TouchableOpacity, View } from "react-native";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import {
   fontPixel,
   pixelSizeHorizontal,
@@ -23,6 +23,7 @@ import {
 import { ShowError } from "../../ultils/Alert";
 import { doLoginAction } from "../../redux/actions/AuthAction";
 import Loader from "../../components/Loader";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 interface LoginFormProps {
   route: any;
 }
@@ -30,12 +31,26 @@ interface LoginFormProps {
 const LoginForm: FC<LoginFormProps> = ({ route }) => {
   const navigation: any = useNavigation();
   const dispatch = useDispatch();
-
+  // const [userToken, setUserToken] = useState<any>(null);
   const [loginFormState, setLoginFormState] = useState({
     userName: { value: "", error: null as null | { message: string } },
     password: { value: "", error: null as null | { message: string } },
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  // useLayoutEffect(() => {
+  //   checkToken();
+  // }, [])
+
+  // const checkToken = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem('userToken');
+  //     navigation.navigate(ROUTES.HOME as never, { flag: true } as never);
+  //     setUserToken(token);
+  //   } catch (error) {
+  //     console.log('Error retrieving token:', error);
+  //   }
+  // };
 
   useEffect(() => {
     if (route?.params?.register === "registerScreen") {
@@ -82,7 +97,6 @@ const LoginForm: FC<LoginFormProps> = ({ route }) => {
     if (isLoading) {
       return;
     }
-
     setIsLoading(true);
     try {
       dispatch(

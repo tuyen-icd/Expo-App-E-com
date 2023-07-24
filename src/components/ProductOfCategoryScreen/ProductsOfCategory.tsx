@@ -35,7 +35,6 @@ const ProductsOfCategory: FC<ProductsOfCategoryProps> = ({ route }) => {
     };
     const handleSearchSubmit = () => {
         setFlagSearch(false);
-        console.log("abc")
     }
     return (
         <View style={{ flex: 1 }}>

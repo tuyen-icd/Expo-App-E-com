@@ -20,13 +20,19 @@ import { ROUTES } from '../../navigations/routers';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/actions/CartAction';
 import { AppState } from '../../redux/reducers/RootReducer';
-
+import { CART_REDUCER } from '../../redux/reducers/ReducerTypes';
+import ReduxHelper from '../../redux/Helpers';
+import getStoredData from '../../redux/Helpers';
 
 interface ProductDetailProps {
     route: any,
 }
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
+    const { data: listCartCurrent } = getStoredData(CART_REDUCER)
+    console.log('listCartCurrent :>> ', listCartCurrent);
+    const dataItemStore = listCartCurrent?.items;
+    console.log('dataItemStore :>> ', dataItemStore);
 
     const dispatch = useDispatch();
     const navigation: any = useNavigation();
@@ -56,12 +62,17 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
             .catch((error) => console.log(error))
     }
 
-    const addProductToCart = (dataProduct: any) => {
-        const product = {
-            id: dataProduct.id,
-            quantity: 1
-        }
-        dispatch(addToCart(product));
+    const addProductToCart = (objectId: number, image: string) => {
+        const index = dataItemStore?.findIndex((item: any) => item.id === objectId);
+        // console.log('index :>> ', index);
+
+        // let dataUpdate = [...dataItemStore];
+        // if (index < 0) {
+        //     let newProduct = { productId: objectId, quantity: 1 };
+        //     dataUpdate = [...dataItemStore, newProduct];
+        // } else {
+        //     dataUpdate[index].quantity += 1;
+        // }
     }
 
     return (
@@ -257,7 +268,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                 <Button
                     text="Add To Cart"
                     buttonSize="Medium"
-                    onPress={() => addProductToCart(dataProduct)}
+                    onPress={() => addProductToCart(dataProduct?.id, dataProduct?.thumbnail)}
                 />
             </View >
         </View >

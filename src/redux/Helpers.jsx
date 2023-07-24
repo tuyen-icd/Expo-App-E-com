@@ -14,5 +14,4 @@ const getStoredData = (reducerName) => {
   };
 };
 
- 
 export default getStoredData;

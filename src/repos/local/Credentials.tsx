@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SESSION_TOKEN = 'SESSION_TOKEN';
 
-async function saveToken(token: string) {
+async function saveTokenToStorage(token: string) {
+    console.log('token :>> ', token);
     try {
         await AsyncStorage.setItem(SESSION_TOKEN, token);
     } catch (e) {
@@ -10,7 +11,7 @@ async function saveToken(token: string) {
     }
 }
 
-async function loadToken() {
+async function loadTokenToStorage() {
     try {
         const token = await AsyncStorage.getItem(SESSION_TOKEN);
         console.log("token", token);
@@ -21,6 +22,6 @@ async function loadToken() {
 }
 
 export default {
-    saveToken,
-    loadToken
+    saveTokenToStorage,
+    loadTokenToStorage
 }

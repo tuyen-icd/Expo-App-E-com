@@ -18,12 +18,12 @@ import axios from "axios";
 import { ShowError } from "../../ultils/Alert";
 import { useNavigation } from "@react-navigation/native";
 
-interface WriteReviewScreen extends ReviewScreenProps {}
+interface WriteReviewScreen extends ReviewScreenProps { }
 
 const WriteReviewScreen: FC<WriteReviewScreen> = ({ route }) => {
   const navigation = useNavigation();
   const { postId } = route.params;
-  console.log("posiid :>> ", postId.id);
+  // console.log("posiid :>> ", postId.id);
   const { data } = useSelector((state: AppState) => state.authReducer);
   const userId = data?.result?.id;
 

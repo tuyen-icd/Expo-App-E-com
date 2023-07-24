@@ -5,7 +5,6 @@ import axios from "axios";
 import { API_LOGIN, API_REGISTER } from "../../configs";
 
 function* doLoginSaga(action) {
-  console.log("action :>> ", action);
   try {
     const requestData = {
       email: action.userName,
@@ -25,16 +24,16 @@ function* doLoginSaga(action) {
       });
       action.callback && action.callback(null, result);
       if (result && result.success == true && result.status === 200) {
-        console.log("PINGGO");
+        // console.log("PINGGO");
+        Credentials.saveTokenToStorage(result.token);
       }
-      Credentials.saveToken(result.token);
     }
   } catch (error) {
     console.log("doLogin Error ===", error);
     action.callback && action.callback(error, null);
   }
 }
-// function* registerSaga(action: any): Generator<any, void, any> 
+// function* registerSaga(action: any): Generator<any, void, any>
 function* registerSaga(action) {
   try {
     const requestData = action.userData;

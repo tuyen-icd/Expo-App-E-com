@@ -36,8 +36,6 @@ export const BirthDayPicker: FC<DatetimePickerProps> = ({
 
     const [titleValue, setTitleValue] = useState(date ? null : title);
 
-    console.log('titleValue', titleValue);
-
     useEffect(() => {
         if (date) {
             setDateState(moment(date).toDate());

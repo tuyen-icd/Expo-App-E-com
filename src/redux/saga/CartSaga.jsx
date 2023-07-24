@@ -1,32 +1,16 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import { all, takeLatest } from "redux-saga/effects";
+import { GET_CART, UPDATE_SHOPPING_CART } from "../actions/ActionTypes";
 
-function* addToCartSaga(action) {
-  console.log('PING1 :>> ');
-  const { payload: product } = action;
-  console.log('productproduct :>> ', product);
-
-  try {
-    const response = yield call(axios.post, 'https://dummyjson.com/carts/add', {
-      userId: 1,
-      products: [
-        {
-          id: product.id,
-          quantity: product.quantity,
-        },
-      ],
-    });
-
-    // Xử lý các bước sau khi gọi API thành công (nếu cần)
-    console.log(response.data);
-  } catch (error) {
-    // Xử lý lỗi khi gọi API
-    console.log(error);
-  }
+function* getCart(action) {
+  console.log("action :>> ", action);
+}
+function* updateShoppingCart(action) {
+  console.log("action :>> ", action);
 }
 
 function* cartSaga() {
-  yield takeEvery(ADD_TO_CART, addToCartSaga);
+  yield all([takeLatest(GET_CART, getCart)]);
+  yield all([takeLatest(UPDATE_SHOPPING_CART, updateShoppingCart)]);
 }
 
 export default cartSaga;
