@@ -1,11 +1,19 @@
-import { all, takeLatest } from "redux-saga/effects";
+import { all, put, takeLatest } from "redux-saga/effects";
 import { GET_CART, UPDATE_SHOPPING_CART } from "../actions/ActionTypes";
+import {
+  getCartSuccess,
+  updateShoppingCartSuccess,
+} from "../actions/CartAction";
 
 function* getCart(action) {
   console.log("action :>> ", action);
 }
 function* updateShoppingCart(action) {
   console.log("action :>> ", action);
+  const { items } = action.payload;
+
+  yield put(updateShoppingCartSuccess({ items }));
+  yield put(getCartSuccess({ items }));
 }
 
 function* cartSaga() {

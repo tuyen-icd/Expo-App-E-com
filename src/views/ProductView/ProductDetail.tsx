@@ -18,7 +18,7 @@ import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../redux/actions/CartAction';
+import { addToCart, updateShoppingCartAction } from '../../redux/actions/CartAction';
 import { AppState } from '../../redux/reducers/RootReducer';
 import { CART_REDUCER } from '../../redux/reducers/ReducerTypes';
 import ReduxHelper from '../../redux/Helpers';
@@ -30,7 +30,6 @@ interface ProductDetailProps {
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     const { data: listCartCurrent } = getStoredData(CART_REDUCER)
-    console.log('listCartCurrent :>> ', listCartCurrent);
     const dataItemStore = listCartCurrent?.items;
     console.log('dataItemStore :>> ', dataItemStore);
 
@@ -63,16 +62,22 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     }
 
     const addProductToCart = (objectId: number, image: string) => {
-        const index = dataItemStore?.findIndex((item: any) => item.id === objectId);
-        // console.log('index :>> ', index);
+        const index = dataItemStore?.findIndex((item: any) => item.productId === objectId);
+        console.log('index_addProductToCart :>> ', index);
+        let dataUpdate = !!dataItemStore ? [...dataItemStore] : [];
+        if (index < 0 || !index) {
+            let newProduct = { productId: objectId, quantity: 1 };
+            dataUpdate.push(newProduct);
 
-        // let dataUpdate = [...dataItemStore];
-        // if (index < 0) {
-        //     let newProduct = { productId: objectId, quantity: 1 };
-        //     dataUpdate = [...dataItemStore, newProduct];
-        // } else {
-        //     dataUpdate[index].quantity += 1;
-        // }
+        } else {
+            dataUpdate[index].quantity += 1;
+        }
+        dispatch(
+            updateShoppingCartAction({
+                items: dataUpdate,
+
+            })
+        )
     }
 
     return (
@@ -266,6 +271,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                 </ScrollView >
 
                 <Button
+
                     text="Add To Cart"
                     buttonSize="Medium"
                     onPress={() => addProductToCart(dataProduct?.id, dataProduct?.thumbnail)}

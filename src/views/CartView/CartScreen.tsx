@@ -1,5 +1,5 @@
-import { Image, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling'
 import { AppEComm } from '../../constants/colors'
 import ItemAddToCart from '../../components/AddToCart/ItemAddToCart'
@@ -9,14 +9,24 @@ import UserInput from '../../components/UserInput'
 import { ICExploreActive } from '../../assets/icons'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../navigations/routers'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../redux/reducers/RootReducer'
+import { CART_REDUCER } from '../../redux/reducers/ReducerTypes'
+import getStoredData from '../../redux/Helpers'
+import axios from 'axios'
 
 const CartScreen = () => {
     const navigation = useNavigation();
-    const { data } = useSelector((state: AppState) => state.cartReducer);
-    console.log('data_cart_screen :>> ', data);
+    const { data: cartRedux } = getStoredData(CART_REDUCER)
+    console.log('cartRedux :>> ', cartRedux);
+    const [listCarts, setListCarts] = useState<any>([]);
     const [cuponCode, setCuponCode] = useState('');
+
+    // useEffect(() => {
+    //     const getCartProduct = axios.get(``)
+    //         .then((response) => setListCarts(response.data.products))
+    //         .catch((error) => console.log(error));
+    // }, [])
+
+
     const handleSreachTermChange = (e: string) => {
         setCuponCode(e);
     }
