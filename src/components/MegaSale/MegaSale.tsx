@@ -34,7 +34,7 @@ const MegaSale = (flashSale: any) => {
                             price={item.price}
                             discountPercentage={item.discountPercentage}
                             thumbnail={item.thumbnail}
-                            dataProduct={item}
+                            dataProducts={item}
                         />}
                     horizontal={true}
                     showsVerticalScrollIndicator={false}

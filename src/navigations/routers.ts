@@ -24,4 +24,5 @@ export const ROUTES = {
     PROFILE_PHONE: 'Phone',
     PROFILE__CHANGE_PASSWORD: 'Change Password',
     PRODUCTS_CATEGORY: 'Products of Category',
+    FAVORITE_PRODUCT: 'Favorite Product',
 }

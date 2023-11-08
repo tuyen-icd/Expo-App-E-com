@@ -79,3 +79,4 @@ export const ImageTransport = require('../images/image_transport.png');
 export const ImagePromotion = require('../images/image_promotion.png');
 export const ImageProfile = require('../images/image_Profile.png');
 export const ImageProduct = require('../images/image_product.png');
+export const bg_empty_cart = require('../images/ic_empty_cart.png');

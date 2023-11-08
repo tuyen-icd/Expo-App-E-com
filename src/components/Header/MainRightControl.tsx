@@ -3,6 +3,8 @@ import React, { FC } from 'react'
 import { ICCart, ICFavious, ICNotification, IcShort } from '../../assets/icons';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../navigations/routers';
 
 interface NotiNumberProps {
     number: number,
@@ -44,13 +46,15 @@ const MainRightControl: FC<MainRightControlProps> = ({
 
     let shakeAnimation = new Animated.Value(0);
 
+    const navigation = useNavigation();
+
     return (
         <>
             {visibleFavious && (
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TouchableOpacity
                         style={[styles.icon, { marginRight: 20 }]}
-                        onPress={() => console.log("xyz")}>
+                        onPress={() => navigation.navigate(ROUTES.FAVORITE_PRODUCT as never)}>
                         <ICFavious />
                         <NotiNumber number={0} />
                     </TouchableOpacity>

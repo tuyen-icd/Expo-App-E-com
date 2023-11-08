@@ -120,7 +120,7 @@ const ProductsOfCategory: FC<ProductsOfCategoryProps> = ({ route }) => {
                                             discountPercentage={item?.discountPercentage}
                                             thumbnail={item?.thumbnail}
                                             containerStyle={styles.flexItemProduct}
-                                            dataProduct={item}
+                                            dataProducts={item}
                                             tag={true}
                                         />}
                                     horizontal={false}

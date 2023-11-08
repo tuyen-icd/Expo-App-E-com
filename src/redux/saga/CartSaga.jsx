@@ -6,12 +6,10 @@ import {
 } from "../actions/CartAction";
 
 function* getCart(action) {
-  console.log("action :>> ", action);
+  console.log("getCart_action :>> ", action);
 }
 function* updateShoppingCart(action) {
-  console.log("action :>> ", action);
   const { items } = action.payload;
-
   yield put(updateShoppingCartSuccess({ items }));
   yield put(getCartSuccess({ items }));
 }

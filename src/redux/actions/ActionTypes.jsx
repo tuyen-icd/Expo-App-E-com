@@ -15,5 +15,8 @@ export const INCREMENT = "INCREMENT";
 export const DECREMENT = "DECREMENT";
 export const REMOVE_ITEM_CART = "REMOVE_ITEM_CART";
 
+//FAVIOUS
+export const GET_FAVIOUS = "GET_FAVIOUS";
+
 //ADDRESS
 export const GET_ADDRESS = "GET_ADDRESS";

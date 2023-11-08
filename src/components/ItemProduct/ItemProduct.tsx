@@ -10,32 +10,46 @@ import { capitalizeFirstLetter } from '../../ultils/CapitalizeFirstString'
 import axios from 'axios'
 import { ROUTES } from '../../navigations/routers'
 import { Skeleton } from '@nlazzos/react-native-skeleton';
-import { ImageProduct } from '../../assets/icons'
 
 export interface ItemProductProps {
-    dataProduct?: any,
+    dataProducts?: any,
     id: number,
     title: string,
     price: number,
     discountPercentage: number,
     thumbnail: string,
     rating?: number
-    containerStyle?: any
-    tag?: any
+    containerStyle?: any,
+    tag?: any,
+    scrollToTop?: any
 }
 
 
-const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discountPercentage, thumbnail, containerStyle, rating, tag }) => {
+const ItemProduct: FC<ItemProductProps> = ({ dataProducts, title, price, discountPercentage, thumbnail, containerStyle, rating, tag, scrollToTop, id }) => {
     const navigation: any = useNavigation();
 
     const navigateProductDetail = () => {
-        const getPostComment = axios.get(`https://dummyjson.com/comments/post/${dataProduct.id}`)
-            .then((response) => {
-                const allComment = response.data?.comments;
-                const onlyComment = allComment[allComment.length - 1];
-                navigation.navigate(ROUTES.PRODUCT_DETAIL as never, { dataProduct: dataProduct, getPostComment: onlyComment } as never)
+        const promises = [
+            axios.get(`https://dummyjson.com/comments/post/${dataProducts?.id}`)
+                .then((response) => {
+                    const allComment = response.data?.comments;
+                    const onlyComment = allComment[allComment.length - 1];
+                    return onlyComment;
+                })
+                .catch((error) => console.log(error)),
+            axios.get(`https://dummyjson.com/products/${id}`)
+                .then((res) => {
+                    const product = res.data;
+                    return product;
+                })
+                .catch((error) => console.log(error)),
+        ]
+        Promise.all(promises)
+            .then(([comment, product]) => {
+                navigation.navigate(ROUTES.PRODUCT_DETAIL as never, { id, dataProduct: product, getPostComment: comment } as never);
+                scrollToTop();
             })
-            .catch((error) => console.log(error))
+            .catch((error) => console.log(error));
     }
 
 
@@ -50,7 +64,7 @@ const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discount
                     }]}
             >
                 {
-                    !dataProduct ? <Skeleton
+                    !dataProducts ? <Skeleton
                         style={{
                             width: tag ? widthPixel(164) : widthPixel(141),
                             height: tag ? heightPixel(238) : heightPixel(238),
@@ -68,13 +82,6 @@ const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discount
                                 uri: thumbnail,
                             }}
                         />
-                        {/* <Image
-                            style={[styles.imgProduct, {
-                                width: tag ? widthPixel(133) : widthPixel(109),
-                                height: tag ? heightPixel(133) : heightPixel(109),
-                            }]}
-                            source={ImageProduct}
-                        /> */}
                         <Text style={styles.txtTitle}>{truncateString(capitalizeFirstLetter(title), 20)}</Text>
                         <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             {
@@ -91,8 +98,8 @@ const ItemProduct: FC<ItemProductProps> = ({ dataProduct, title, price, discount
                         </View>
                         <Text style={styles.txtPrice}>${price}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={styles.txtPriceDefault}>${Math.round(dataProduct?.price / (1 - dataProduct?.discountPercentage / 100))}</Text>
-                            <Text style={styles.txtDiscountPercentage}> - ${Math.round((dataProduct?.price / (1 - dataProduct?.discountPercentage / 100)) - price)} Off</Text>
+                                <Text style={styles.txtPriceDefault}>${Math.round(dataProducts?.price / (1 - dataProducts?.discountPercentage / 100))}</Text>
+                                <Text style={styles.txtDiscountPercentage}> - ${Math.round((dataProducts?.price / (1 - dataProducts?.discountPercentage / 100)) - price)} Off</Text>
                         </View>
 
                     </View>

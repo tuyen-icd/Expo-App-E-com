@@ -13,7 +13,7 @@ import MegaSale from "../../components/MegaSale/MegaSale";
 import ItemProduct from "../../components/ItemProduct/ItemProduct";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
-import { API_FLASH_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER } from "../../configs";
+import { API_FLASH_SALE, API_MEGA_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER } from "../../configs";
 import Loader from "../../components/Loader";
 import { Skeleton } from '@nlazzos/react-native-skeleton';
 import Spacer from "../../components/Spacer";
@@ -23,6 +23,7 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [txtSearch, setTxtSearch] = useState("");
   const [flashSale, setFlashSale] = useState([]);
+  const [megaSale, setMegaSale] = useState([]);
   const [dataSliderCarousel, setDataSliderCarousel] = useState([]);
   const [dataProductBottom, setDataProductBottom] = useState<any[]>([]);
   const [products, setProducts] = useState<any>([]);
@@ -58,6 +59,12 @@ const HomeScreen = () => {
       .then((response) => {
         setFlashSale(response.data.products);
       });
+    
+    const dataMegaSale = axios
+      .get(API_MEGA_SALE)
+      .then((response) => {
+        setMegaSale(response.data.products);
+      })
 
     const dataSlider = axios
       .get(API_SLIDER)
@@ -136,7 +143,7 @@ const HomeScreen = () => {
             <FlashSale flashSale={flashSale} />
           </View>
           <View>
-            <MegaSale flashSale={flashSale} />
+            <MegaSale flashSale={megaSale} />
           </View>
           <View style={{ marginBottom: heightPixel(24) }}>
             <Image style={styles.imgBackground} source={ImageBackgroundHome} />
@@ -170,7 +177,7 @@ const HomeScreen = () => {
                   discountPercentage={item?.discountPercentage}
                   thumbnail={item?.thumbnail}
                   containerStyle={styles.flexItemProduct}
-                  dataProduct={item}
+                  dataProducts={item}
                   tag={true}
                 />
               )}

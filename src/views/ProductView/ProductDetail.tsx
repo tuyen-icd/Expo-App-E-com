@@ -1,5 +1,5 @@
 import { FlatList, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BackHeader from '../../components/Header/BackHeader'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ICExplore, ICFavious, IcFaviousActive } from '../../assets/icons';
@@ -18,10 +18,9 @@ import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, updateShoppingCartAction } from '../../redux/actions/CartAction';
+import { updateShoppingCartAction } from '../../redux/actions/CartAction';
 import { AppState } from '../../redux/reducers/RootReducer';
 import { CART_REDUCER } from '../../redux/reducers/ReducerTypes';
-import ReduxHelper from '../../redux/Helpers';
 import getStoredData from '../../redux/Helpers';
 
 interface ProductDetailProps {
@@ -29,16 +28,25 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
-    const { data: listCartCurrent } = getStoredData(CART_REDUCER)
-    const dataItemStore = listCartCurrent?.items;
-    console.log('dataItemStore :>> ', dataItemStore);
+
+    let { data: listCartCurrent } = getStoredData(CART_REDUCER)
 
     const dispatch = useDispatch();
     const navigation: any = useNavigation();
+    const scrollViewRef = useRef<any>(null);
     const { data } = useSelector((state: AppState) => state.authReducer);
     const userId = data?.result?.id;
+    const { id, dataProduct, getPostComment } = route.params;
+    console.log('id :>> ', id);
+    console.log('dataProduct :>> ', dataProduct);
+    console.log('getPostComment :>> ', getPostComment);
 
-    const { dataProduct, getPostComment } = route.params;
+    const scrollToTop = () => {
+        if (scrollViewRef.current) {
+            scrollViewRef.current.scrollTo({ y: 0, animated: true });
+        }
+    }
+    
     const imageCaroselProduct = dataProduct?.images;
     const [flagSearch, setFlagSearch] = useState(false);
     const [alsoLike, setAlsoLike] = useState();
@@ -61,13 +69,20 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
             .catch((error) => console.log(error))
     }
 
-    const addProductToCart = (objectId: number, image: string) => {
-        const index = dataItemStore?.findIndex((item: any) => item.productId === objectId);
-        console.log('index_addProductToCart :>> ', index);
-        let dataUpdate = !!dataItemStore ? [...dataItemStore] : [];
-        if (index < 0 || !index) {
-            let newProduct = { productId: objectId, quantity: 1 };
-            dataUpdate.push(newProduct);
+    const addProductToCart = (objectId: number, images: string, title: string, price: number) => {
+        console.log('images :>> ', images);
+        let dataItemStore = [];
+        if (listCartCurrent == null || listCartCurrent == undefined) {
+            dataItemStore = [];
+        } else {
+            dataItemStore = listCartCurrent?.items;
+        }
+
+        const index = dataItemStore?.findIndex((item: any) => item.id === objectId);
+        let dataUpdate = [...dataItemStore];
+        if (index < 0) {
+            let newProduct = { id: objectId, images, title, price, quantity: 1 };
+            dataUpdate = [...dataItemStore, newProduct]
 
         } else {
             dataUpdate[index].quantity += 1;
@@ -80,11 +95,15 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
         )
     }
 
+    const handleFavorite = (idProduct: any) => {
+        setFavious(prev => !prev)
+    }
+
     return (
         <View style={{ backgroundColor: AppEComm.color.white, flex: 1 }}>
             <View style={styles.header}>
                 {
-                    !flagSearch ? <BackHeader title={capitalizeFirstLetter(dataProduct.title)} /> : ''
+                    !flagSearch ? <BackHeader title={dataProduct.title.length > 20 ? dataProduct.title.slice(0, 20) + '...' : dataProduct.title} /> : ''
                 }
 
                 <TouchableOpacity onPress={() => navigation.navigate(ROUTES.EXPLORE as never)}>
@@ -92,7 +111,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                 </TouchableOpacity>
             </View>
             <View style={{ flex: 1, paddingHorizontal: 16, paddingBottom: heightPixel(50) }}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} ref={ scrollViewRef}>
                     <SliderImage dataSliderCarousel={imageCaroselProduct} />
                     <View style={{ paddingHorizontal: 16 }}>
                         <View
@@ -108,7 +127,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                 {capitalizeFirstLetter(dataProduct?.title)}
                             </Text>
 
-                            <TouchableOpacity onPress={() => setFavious(prev => !prev)}>
+                            <TouchableOpacity onPress={() => handleFavorite(dataProduct?.id)}>
                                 {
                                     favious ? <IcFaviousActive /> : <ICFavious />
                                 }
@@ -259,7 +278,8 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                         price={item.price}
                                         discountPercentage={item.discountPercentage}
                                         thumbnail={item.thumbnail}
-                                        dataProduct={item}
+                                        dataProducts={item}
+                                        scrollToTop={scrollToTop}
                                     />
                                 }
                                 horizontal={true}
@@ -274,7 +294,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
 
                     text="Add To Cart"
                     buttonSize="Medium"
-                    onPress={() => addProductToCart(dataProduct?.id, dataProduct?.thumbnail)}
+                    onPress={() => addProductToCart(dataProduct?.id, dataProduct?.thumbnail, dataProduct?.title, dataProduct?.price)}
                 />
             </View >
         </View >

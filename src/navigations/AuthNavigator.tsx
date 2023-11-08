@@ -22,6 +22,7 @@ import ProfileEmail from "../views/AccountView/components/ProfileEmail";
 import ProfilePhone from "../views/AccountView/components/ProfilePhone";
 import ProfileChangePassword from "../views/AccountView/components/ProfileChangePassword";
 import ProductsOfCategory from "../components/ProductOfCategoryScreen/ProductsOfCategory";
+import FavoriteView from "../views/FavoriteView";
 
 const Stack = createStackNavigator();
 
@@ -219,6 +220,16 @@ const AuthNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE__CHANGE_PASSWORD}
         component={ProfileChangePassword}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+
+      <Stack.Screen
+        name={ROUTES.FAVORITE_PRODUCT}
+        component={FavoriteView}
         options={{
           headerShown: false,
           gestureEnabled: false,
