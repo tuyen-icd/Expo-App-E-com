@@ -12,8 +12,7 @@ import InputEmail from '../../../components/Inputs/InputEmail'
 const ProfileEmail = () => {
     const [formEmail, setFormEmail] = useState({
         value: "", error: null as null | { message: string }
-    })
-    console.log('formEmail :>> ', formEmail);
+    });
     return (
         <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
             <View style={defaultStyle.header}>

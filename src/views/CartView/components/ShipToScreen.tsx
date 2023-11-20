@@ -82,7 +82,6 @@ const ShiptoScreen = () => {
     ]
     const navigation = useNavigation();
     const { data: dataAddress } = getStoredData(ADD_ADDRESS_REDUCER);
-    console.log('data_address_ship_to :>> ', dataAddress);
 
     return (
         <View style={{ flex: 1 }}>

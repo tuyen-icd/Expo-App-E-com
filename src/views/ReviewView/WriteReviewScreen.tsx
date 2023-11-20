@@ -23,7 +23,7 @@ interface WriteReviewScreen extends ReviewScreenProps { }
 const WriteReviewScreen: FC<WriteReviewScreen> = ({ route }) => {
   const navigation = useNavigation();
   const { postId } = route.params;
-  // console.log("posiid :>> ", postId.id);
+
   const { data } = useSelector((state: AppState) => state.authReducer);
   const userId = data?.result?.id;
 
@@ -59,8 +59,6 @@ const WriteReviewScreen: FC<WriteReviewScreen> = ({ route }) => {
     let image = null;
     if (confirmData === 2) {
       image = await pickImageLibrary();
-
-      console.log("imageNotification :>> ", image);
     }
     if (confirmData === 1) {
       console.log("1111");

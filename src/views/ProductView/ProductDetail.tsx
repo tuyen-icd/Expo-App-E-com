@@ -37,9 +37,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     const { data } = useSelector((state: AppState) => state.authReducer);
     const userId = data?.result?.id;
     const { id, dataProduct, getPostComment } = route.params;
-    console.log('id :>> ', id);
-    console.log('dataProduct :>> ', dataProduct);
-    console.log('getPostComment :>> ', getPostComment);
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -70,7 +67,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
     }
 
     const addProductToCart = (objectId: number, images: string, title: string, price: number) => {
-        console.log('images :>> ', images);
         let dataItemStore = [];
         if (listCartCurrent == null || listCartCurrent == undefined) {
             dataItemStore = [];

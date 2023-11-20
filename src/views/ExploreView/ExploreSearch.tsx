@@ -22,10 +22,10 @@ const ExploreSearch: FC<ExploreSearchProps> = ({ route }) => {
     const navigation = useNavigation();
 
     const [searchInput, setSearchInput] = useState(txtSearch);
-    console.log('searchInput :>> ', searchInput);
+
     const [valueInput, setValueInput] = useState('');
     const [dataSearch, getDataSearch] = useState<any>([]);
-    console.log('dataSearch :>> ', dataSearch);
+
 
     useEffect(() => {
         if (searchInput !== '') {
@@ -51,7 +51,6 @@ const ExploreSearch: FC<ExploreSearchProps> = ({ route }) => {
 
     const handleShort = () => {
         const dataShort = dataSearch.products.sort((a: { price: number }, b: { price: number }) => b.price - a.price);
-        console.log('dataShort :>> ', dataShort);
         // getDataSearch(dataShort)
     }
     return (

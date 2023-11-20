@@ -23,8 +23,6 @@ const AddressShip = () => {
     });
     const [address, setAddress] = useState<any[]>([]);
 
-    console.log('address :>> ', address);
-
     const checkValidateFormAddress = () => {
         const errorName = checkValidateStringField(formAddressState.name.value);
         const errorAddress = checkValidateStringField(formAddressState.address.value);

@@ -15,7 +15,6 @@ import { ROUTES } from '../../navigations/routers'
 
 const ItemAddToCart = () => {
     const { data: cartRedux } = getStoredData(CART_REDUCER)
-    console.log('cartRedux :>> ', cartRedux);
     const [favious, setFavious] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
