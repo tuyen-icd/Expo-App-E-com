@@ -4,12 +4,14 @@ import ProductReducer from "./ProductReducer";
 import AuthReducer from "./AuthReducer";
 import AddressReducer from "./AddressReducer";
 import CartReducer from "./CartReducer";
+import FavoriteReducer from "./FavoriteReducer";
 
 const appReducer = combineReducers({
   authReducer: AuthReducer,
   productReducer: ProductReducer,
   addAddressReducer: AddressReducer,
   cartReducer: CartReducer,
+  favoriteReducer: FavoriteReducer,
 });
 
 const rootReducer = (state, action) => {

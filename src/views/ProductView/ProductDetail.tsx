@@ -20,7 +20,7 @@ import { ROUTES } from '../../navigations/routers';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShoppingCartAction } from '../../redux/actions/CartAction';
 import { AppState } from '../../redux/reducers/RootReducer';
-import { CART_REDUCER } from '../../redux/reducers/ReducerTypes';
+import { CART_REDUCER, FAVORITE_REDUCER } from '../../redux/reducers/ReducerTypes';
 import getStoredData from '../../redux/Helpers';
 
 interface ProductDetailProps {
@@ -30,6 +30,8 @@ interface ProductDetailProps {
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
 
     let { data: listCartCurrent } = getStoredData(CART_REDUCER)
+
+    let { data: listFavoriteCurrent } = getStoredData(FAVORITE_REDUCER);
 
     const dispatch = useDispatch();
     const navigation: any = useNavigation();
@@ -91,7 +93,15 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
         )
     }
 
-    const handleFavorite = (idProduct: any) => {
+    const handleFavorite = (objectId: number, images: string, title: string, price: number) => {
+        let dataItemStore = [];
+        if (listFavoriteCurrent == null || listFavoriteCurrent == undefined) {
+            dataItemStore = [];
+        } else {
+            dataItemStore = listFavoriteCurrent?.items;
+        }
+        const index = dataItemStore?.findIndex((item: any) => item.id === objectId);
+        let dataUpdate = [...dataItemStore];
         setFavious(prev => !prev)
     }
 
@@ -123,7 +133,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                 {capitalizeFirstLetter(dataProduct?.title)}
                             </Text>
 
-                            <TouchableOpacity onPress={() => handleFavorite(dataProduct?.id)}>
+                            <TouchableOpacity onPress={() => handleFavorite(dataProduct?.id, dataProduct?.thumbnail, dataProduct?.title, dataProduct?.price)}>
                                 {
                                     favious ? <IcFaviousActive /> : <ICFavious />
                                 }
