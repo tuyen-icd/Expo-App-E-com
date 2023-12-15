@@ -4,9 +4,7 @@ import { getAddressSuccess } from "../actions/AddressAction";
 
 function* getAddressSaga(action) {
     const { dataAddress } = action.payload;
-
     console.log('dataAddress _ Saga :>> ', dataAddress);
-
     yield put(getAddressSuccess({ dataAddress }));
 }
 

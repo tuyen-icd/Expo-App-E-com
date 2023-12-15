@@ -32,7 +32,7 @@ const HomeScreen = () => {
   const loadProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`https://dummyjson.com/products?limit=${page}&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`);
+      const response = await axios.get(`https://dummyjson.com/products?limit=50&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`);
       const data = response.data.products;
       if (data.length > 0) {
         setProducts([...products, ...data]);
@@ -40,8 +40,9 @@ const HomeScreen = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   };
 
   const handleLoadMore = () => {

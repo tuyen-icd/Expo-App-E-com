@@ -6,21 +6,22 @@ import { AppEComm } from '../../../constants/colors'
 import { ICAddressActive, IcTrash } from '../../../assets/icons'
 import { useNavigation } from '@react-navigation/native'
 import { ROUTES } from '../../../navigations/routers'
-import { ADD_ADDRESS_REDUCER } from '../../../redux/reducers/ReducerTypes'
-import getStoredData from '../../../redux/Helpers'
 import Button from '../../../components/Button/Button'
 import Spacer from '../../../components/Spacer'
-import { LinearGradient } from "expo-linear-gradient";
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../redux/reducers/RootReducer'
 
-const ItemAddress = ({ dataFake }: any) => {
+const ItemAddress = ({ data }: any) => {
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
-
+    const navigation: any = useNavigation();
     const selectItem = (itemId: string) => {
         setSelectedItem(itemId);
     };
 
+    console.log('data_ping1 :>> ', data);
+
     return (
-        dataFake.map((item: any, index: number) => (
+        data?.map((item: any, index: number) => (
             <TouchableOpacity onPress={() => selectItem(item.id)} key={index}>
                 <View style={{
                     borderColor: selectedItem === item.id ? AppEComm.color.blue_001 : AppEComm.color.borderColor,
@@ -56,7 +57,7 @@ const ItemAddress = ({ dataFake }: any) => {
                             <Button
                                 text="Edit"
                                 buttonSize="Medium"
-                                onPress={() => console.log("edit")}
+                                onPress={() => navigation.navigate(ROUTES.ADDRESS_SHIP as never, { dataEdit: item } as never)}
                                 containerStyle={{ width: widthPixel(77), height: heightPixel(57) }}
                             />
                         </View>
@@ -74,14 +75,8 @@ const ItemAddress = ({ dataFake }: any) => {
 }
 
 const ShiptoScreen = () => {
-
-    const dataFake = [
-        { id: 1, name: 'icd-test01', address: '277-279 Ly Tu Trong, Phuong Ben Thanh, Quan 1, Ho Chi Minh', phone: '0912121112' },
-        { id: 2, name: 'icd-test02', address: '277-279 Ly Tu Trong, Phuong Ben Thanh, Quan 1, Ho Chi Minh', phone: '0913113113' },
-        { id: 3, name: 'icd-test03', address: '277-279 Ly Tu Trong, Phuong Ben Thanh, Quan 1, Ho Chi Minh', phone: '0914114114' },
-    ]
     const navigation = useNavigation();
-    const { data: dataAddress } = getStoredData(ADD_ADDRESS_REDUCER);
+    const { data } = useSelector((state: AppState) => state.addAddressReducer);
 
     return (
         <View style={{ flex: 1 }}>
@@ -98,7 +93,7 @@ const ShiptoScreen = () => {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Spacer height={10} />
                     <View >
-                        <ItemAddress dataFake={dataFake} />
+                        <ItemAddress data={data?.dataAddress} />
                     </View>
                 </ScrollView>
                 <View style={{

@@ -1,9 +1,9 @@
 import { FAILURE, GET_FAVORITE, SUCCESS } from "./ActionTypes";
 
-export const getFavoriteAction = (id, callback = (error, data) => { }) => {
+export const getFavoriteAction = (payload, callback = (error, data) => { }) => {
   return {
     type: GET_FAVORITE,
-    payload: id,
+    payload,
     callback,
   };
 };

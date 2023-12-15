@@ -12,6 +12,7 @@ import { ROUTES } from '../../navigations/routers'
 import { CART_REDUCER } from '../../redux/reducers/ReducerTypes'
 import getStoredData from '../../redux/Helpers'
 import Spacer from '../../components/Spacer'
+import { ShowError } from '../../ultils/Alert'
 
 const CartScreen = () => {
     const { data: cartRedux } = getStoredData(CART_REDUCER);
@@ -22,21 +23,22 @@ const CartScreen = () => {
 
     const navigation = useNavigation();
     const [cuponCode, setCuponCode] = useState('');
-
-    // const [listCarts, setListCarts] = useState<any>([]);
-
-    // useEffect(() => {
-    //     const getCartProduct = axios.get(``)
-    //         .then((response) => setListCarts(response.data.products))
-    //         .catch((error) => console.log(error));
-    // }, [])
-
-
+    const [txtCuponCode, setTxtCuponCode] = useState('123456');
+    const [flagCode, setFlagCode] = useState(false);
 
     const handleSreachTermChange = (e: string) => {
         setCuponCode(e);
+        if (e !== txtCuponCode || e === '') {
+            setFlagCode(false);
+        }
     }
     const handleSearchSubmit = () => {
+        
+        if (cuponCode == txtCuponCode) {
+            setFlagCode(true);
+        } else {
+            ShowError('The code is invalid');
+        }
         console.log("abc")
     }
     return (
@@ -67,7 +69,7 @@ const CartScreen = () => {
                             letterSpacing: 1,
                             lineHeight: 15,
                             paddingVertical: 8
-                        }}>Thank you for Cart using lafyuu</Text>
+                        }}>Thank you for Cart using Cart-Ecom</Text>
                         <Spacer height={50} />
 
                         <Button
@@ -75,7 +77,6 @@ const CartScreen = () => {
                             buttonSize="Medium"
                             onPress={() => navigation.navigate(ROUTES.HOME as never)}
                         />
-
                     </View>
                 ) : (
                         <ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: widthPixel(16) }}>
@@ -89,7 +90,7 @@ const CartScreen = () => {
                                             <Button
                                                 text="Apply"
                                                 buttonSize="Small"
-                                                onPress={() => console.log("Cupon code")}
+                                                onPress={handleSearchSubmit}
                                                 buttonStyles={{ width: widthPixel(87) }}
                                                 containerStyle={{ marginTop: 0, marginLeft: 15 }}
                                             />
@@ -117,6 +118,12 @@ const CartScreen = () => {
                                     <Text style={styles.txtLeft}>Import charges</Text>
                                     <Text style={styles.txtRight}>$10.00</Text>
                                 </View>
+                                {
+                                    flagCode && <View style={defaultStyle.flexJustify}>
+                                        <Text style={styles.txtLeft}>Discount code</Text>
+                                        <Text style={styles.txtRight}>- $10.00</Text>
+                                    </View>
+                                }
                                 <View style={styles.line}></View>
                                 <View style={defaultStyle.flexJustify}>
                                     <Text style={{
@@ -130,7 +137,7 @@ const CartScreen = () => {
                                         fontWeight: '700',
                                         lineHeight: 15,
                                         letterSpacing: 0.5
-                                    }}>${toltalPrice ? (toltalPrice + 40 + 10) : 0 }.00</Text>
+                                    }}>${flagCode ? toltalPrice ? (toltalPrice + 40 + 10 - 10) : 0 : toltalPrice ? (toltalPrice + 40 + 10) : 0 }.00 </Text>
                                 </View>
                             </View>
                             <Button

@@ -1,5 +1,5 @@
 import { Image, Platform, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import BackHeader from '../../../components/Header/BackHeader'
 import { ImageTransport } from '../../../assets/icons'
 import { fontPixel, heightPixel, widthPixel } from '../../../ultils/scanling'
@@ -8,20 +8,44 @@ import UserInput from '../../../components/UserInput'
 import Button from '../../../components/Button/Button'
 import Spacer from '../../../components/Spacer'
 import { checkValidateStringField } from '../../../ultils/CheckValidateInput'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAddress } from '../../../redux/actions/AddressAction'
 import { useNavigation } from '@react-navigation/native'
-
-const AddressShip = () => {
+import { AppState } from '../../../redux/reducers/RootReducer'
+interface AddressShipProps {
+    route: any,
+}
+const AddressShip: FC<AddressShipProps> = ({ route }) => {
+    const params = route?.params?.dataEdit;
     const navigation = useNavigation();
     const dispatch = useDispatch();
-
+    const { data: dataAddressRedux } = useSelector((state: AppState) => state.addAddressReducer);
     const [formAddressState, setFormAddressState] = useState<any>({
         name: { value: "", error: null as null | { message: string } },
         address: { value: "", error: null as null | { message: string } },
         phone: { value: "", error: null as null | { message: string } },
     });
-    const [address, setAddress] = useState<any[]>([]);
+
+    console.log('dataAddressRedux :>> ', dataAddressRedux);
+
+    useEffect(() => {
+        if (params) {
+            setFormAddressState(
+                {
+                    name: { value: params?.name, error: null },
+                    address: { value: params?.address, error: null },
+                    phone: { value: params?.phone }, error: null,
+                }
+            )
+        } else {
+            console.log('ping2 :>> ');
+            setFormAddressState({
+                name: { value: "", error: null },
+                address: { value: "", error: null },
+                phone: { value: "", error: null },
+            });
+        }
+    }, [params]);
 
     const checkValidateFormAddress = () => {
         const errorName = checkValidateStringField(formAddressState.name.value);
@@ -52,45 +76,36 @@ const AddressShip = () => {
 
     const handleSubmit = () => {
         const isValid = checkValidateFormAddress();
+        console.log('dataAddressRedux :>> ', dataAddressRedux);
         if (isValid) {
-            const newAddress = {
+            let dataAddressStore = [];
+            if (dataAddressRedux == null || dataAddressRedux == undefined) {
+                dataAddressStore = [];
+            } else {
+                dataAddressStore = dataAddressRedux?.dataAddress
+            }
+            let dataUpdateAddress = [...dataAddressStore];
+
+            let newAddress = {
+                id: 'newId_' + Date.now(),
                 name: formAddressState.name.value,
                 address: formAddressState.address.value,
                 phone: formAddressState.phone.value,
             };
-            setAddress(prevAddress => [...prevAddress, newAddress]);
-
+            dataUpdateAddress = [...dataAddressStore, newAddress]
             dispatch(
                 getAddress({
-                    dataAddress: address,
+                    dataAddress: dataUpdateAddress,
                 })
-            )
-
+            );
             setFormAddressState({
                 name: { value: "", error: null },
                 address: { value: "", error: null },
                 phone: { value: "", error: null }
             })
-
             navigation.goBack()
         }
     };
-
-    // const onSubmitEdit = (editedAddress) => {
-    //     const updatedAddresses = addresses.map(address => {
-    //         if (address.id === editedAddress.id) {
-    //             return {
-    //                 ...address,
-    //                 name: editedAddress.name,
-    //                 address: editedAddress.address,
-    //                 phone: editedAddress.phone
-    //             };
-    //         }
-    //         return address;
-    //     });
-
-    //     setAddresses(updatedAddresses);
-    // };
 
     return (
         <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
@@ -106,10 +121,10 @@ const AddressShip = () => {
                     <Image source={ImageTransport} style={{ width: widthPixel(200), height: heightPixel(120) }} />
                 </View>
                 <View>
-                    <Text style={styles.txtTitle}>Last Name:</Text>
+                    <Text style={styles.txtTitle}>Full Name:</Text>
                     <UserInput.TextInput
-                        value={formAddressState.name}
-                        placeholder={`Last Name`}
+                        value={formAddressState.name.value}
+                        placeholder={`Full Name`}
                         error={formAddressState.name.error}
                         onChangeText={(text) => {
                             setFormAddressState({
@@ -127,7 +142,7 @@ const AddressShip = () => {
                 <View>
                     <Text style={styles.txtTitle}>Address for Delivery:</Text>
                     <UserInput.TextInput
-                        value={formAddressState.address}
+                        value={formAddressState.address.value}
                         placeholder={`Address for Delivery`}
                         error={formAddressState.address.error}
                         onChangeText={(text) => {
@@ -146,7 +161,7 @@ const AddressShip = () => {
                 <View>
                     <Text style={styles.txtTitle}>Mobile Phone:</Text>
                     <UserInput.TextInput
-                        value={formAddressState.phone}
+                        value={formAddressState.phone.value}
                         placeholder={`Mobile Phone`}
                         error={formAddressState.phone.error}
                         onChangeText={(text) => {
@@ -163,7 +178,7 @@ const AddressShip = () => {
                     />
                 </View>
                 <Button
-                    text="Add Address"
+                    text={params ? 'Edit' : 'Add Address'}
                     buttonSize="Medium"
                     onPress={() => handleSubmit()}
                 />

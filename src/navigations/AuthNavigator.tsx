@@ -23,10 +23,38 @@ import ProfilePhone from "../views/AccountView/components/ProfilePhone";
 import ProfileChangePassword from "../views/AccountView/components/ProfileChangePassword";
 import ProductsOfCategory from "../components/ProductOfCategoryScreen/ProductsOfCategory";
 import FavoriteView from "../views/FavoriteView";
+import Credentials from "../repos/local/Credentials";
+import { setSessionToken } from "../configs";
+import { useDispatch } from "react-redux";
+import { checkTokenAction } from "../redux/actions/AuthAction";
+import { useEffect } from "react";
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
+
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    handleCheckTokenProcess();
+  })
+
+  const handleCheckTokenProcess = () => {
+    Credentials.loadTokenToStorage().then(token => {
+      if (token && token.length > 0) {
+        console.log('Saved token available');
+        setSessionToken(token);
+        dispatch(
+          checkTokenAction((error, data) => {
+            if (error) {
+              console.log("Validate token failure");
+            }
+          })
+        )
+      };
+    });
+  };
+
   return (
     <Stack.Navigator
       screenOptions={{

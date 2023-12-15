@@ -22,23 +22,36 @@ import { updateShoppingCartAction } from '../../redux/actions/CartAction';
 import { AppState } from '../../redux/reducers/RootReducer';
 import { CART_REDUCER, FAVORITE_REDUCER } from '../../redux/reducers/ReducerTypes';
 import getStoredData from '../../redux/Helpers';
+import { getFavoriteAction } from '../../redux/actions/FavoriteAction';
 
 interface ProductDetailProps {
     route: any,
 }
 
 const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
-
+    const { id, dataProduct, getPostComment } = route.params;
     let { data: listCartCurrent } = getStoredData(CART_REDUCER)
-
     let { data: listFavoriteCurrent } = getStoredData(FAVORITE_REDUCER);
+
+    useEffect(() => {
+        if (!listFavoriteCurrent) {
+            return;
+        } else {
+            const dataReduxFavious = listFavoriteCurrent?.items;
+            const dataCheck = dataReduxFavious.findIndex((item: any) => item.id === id)
+            if (dataCheck < 0) {
+                return;
+            } else {
+                setFavious(true);
+            }
+        }
+    }, [])
 
     const dispatch = useDispatch();
     const navigation: any = useNavigation();
     const scrollViewRef = useRef<any>(null);
     const { data } = useSelector((state: AppState) => state.authReducer);
     const userId = data?.result?.id;
-    const { id, dataProduct, getPostComment } = route.params;
 
     const scrollToTop = () => {
         if (scrollViewRef.current) {
@@ -93,7 +106,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
         )
     }
 
-    const handleFavorite = (objectId: number, images: string, title: string, price: number) => {
+    const handleFavorite = (objectId: number, images: string, title: string, price: number, discountPercentage: number) => {
         let dataItemStore = [];
         if (listFavoriteCurrent == null || listFavoriteCurrent == undefined) {
             dataItemStore = [];
@@ -102,6 +115,18 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
         }
         const index = dataItemStore?.findIndex((item: any) => item.id === objectId);
         let dataUpdate = [...dataItemStore];
+        if (index < 0) {
+            let newProduct = { id: objectId, images, title, price, discountPercentage ,favorite: true };
+            dataUpdate = [...dataItemStore, newProduct]
+            console.log('dataUpdate :>> ', dataUpdate);
+        } else {
+            dataUpdate.splice(index, 1);
+        }
+        dispatch(
+            getFavoriteAction({
+                items: dataUpdate,
+            })
+        )
         setFavious(prev => !prev)
     }
 
@@ -133,7 +158,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ route }) => {
                                 {capitalizeFirstLetter(dataProduct?.title)}
                             </Text>
 
-                            <TouchableOpacity onPress={() => handleFavorite(dataProduct?.id, dataProduct?.thumbnail, dataProduct?.title, dataProduct?.price)}>
+                            <TouchableOpacity onPress={() => handleFavorite(dataProduct?.id, dataProduct?.thumbnail, dataProduct?.title, dataProduct?.price, dataProduct?.discountPercentage)}>
                                 {
                                     favious ? <IcFaviousActive /> : <ICFavious />
                                 }

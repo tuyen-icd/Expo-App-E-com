@@ -20,3 +20,6 @@ export const GET_FAVORITE = "GET_FAVORITE";
 
 //ADDRESS
 export const GET_ADDRESS = "GET_ADDRESS";
+
+//TOKEN
+export const CHECK_SAVED_TOKEN = "CHECK_SAVED_TOKEN";

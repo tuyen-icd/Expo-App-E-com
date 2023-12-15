@@ -6,3 +6,12 @@ export const API_MEGA_SALE = "https://dummyjson.com/products?limit=10&skip=80&se
 export const API_SLIDER = "https://dummyjson.com/products?limit=5&skip=1&select=thumbnail";
 export const API_ALL_CATEGORY = 'https://dummyjson.com/products/categories';
 export const API_PRODUCT_BOTTOM_HOME = "https://dummyjson.com/products?limit=10&skip=32&select=id,title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images";
+
+let SESSION_TOKEN = '';
+
+export function setSessionToken(sessionToken: any) {
+    SESSION_TOKEN = sessionToken;
+}
+export function getSessionToken() {
+    return SESSION_TOKEN;
+}

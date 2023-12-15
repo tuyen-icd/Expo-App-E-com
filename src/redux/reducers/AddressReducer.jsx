@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
                 ...state,
                 pending: false,
                 data: null,
-                error: action.payload,
+                error: action.payload.error,
             };
         default:
             return {

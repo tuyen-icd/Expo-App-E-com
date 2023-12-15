@@ -36,3 +36,11 @@ export const doRegisterAction = (userData, callback = (error, data) => { }) => {
         callback,
     };
 };
+
+//Token
+export const checkTokenAction = (callback = (error, data) => { }) => {
+    return {
+        type: CHECK_SAVED_TOKEN,
+        callback
+    }
+}

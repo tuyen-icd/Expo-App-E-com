@@ -1,4 +1,4 @@
-import { DO_LOGIN, DO_REGISTER, FAILURE, SUCCESS } from "../actions/ActionTypes"
+import { CHECK_SAVED_TOKEN, DO_LOGIN, DO_REGISTER, FAILURE, SUCCESS } from "../actions/ActionTypes"
 
 const initalState = {
     pending: false,
@@ -35,6 +35,13 @@ export default (state = initalState, action) => {
                 data: null,
                 error: null,
             };
+        case CHECK_SAVED_TOKEN:
+            return {
+                ...state,
+                peding: true,
+                data: null,
+                error : null,
+            }
         default:
             return {
                 ...state,

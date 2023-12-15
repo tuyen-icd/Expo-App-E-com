@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { DO_LOGIN, DO_REGISTER, SUCCESS } from "../actions/ActionTypes";
+import { CHECK_SAVED_TOKEN, DO_LOGIN, DO_REGISTER, SUCCESS } from "../actions/ActionTypes";
 import Credentials from "../../repos/local/Credentials";
 import axios from "axios";
 import { API_LOGIN, API_REGISTER } from "../../configs";
@@ -50,12 +50,22 @@ function* registerSaga(action) {
   } catch (error) {
     console.log("error", error);
   }
+};
+
+function* checkTokenSaga(action) {
+  try {
+    console.log("tokenLog", action);
+  }
+  catch(e) {
+    console.log("error", e)
+  }
 }
 
 function* authSaga() {
   yield all([
     takeLatest(DO_LOGIN, doLoginSaga),
     takeLatest(DO_REGISTER, registerSaga),
+    takeLatest(CHECK_SAVED_TOKEN, checkTokenSaga),
   ]);
 }
 
