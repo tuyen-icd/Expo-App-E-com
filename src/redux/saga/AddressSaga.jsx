@@ -3,13 +3,12 @@ import { GET_ADDRESS } from "../actions/ActionTypes";
 import { getAddressSuccess } from "../actions/AddressAction";
 
 function* getAddressSaga(action) {
-    const { dataAddress } = action.payload;
-    console.log('dataAddress _ Saga :>> ', dataAddress);
-    yield put(getAddressSuccess({ dataAddress }));
+  const { dataAddress } = action.payload;
+  yield put(getAddressSuccess({ dataAddress }));
 }
 
 function* addressSaga() {
-    yield all([takeLatest(GET_ADDRESS, getAddressSaga)]);
+  yield all([takeLatest(GET_ADDRESS, getAddressSaga)]);
 }
 
 export default addressSaga;

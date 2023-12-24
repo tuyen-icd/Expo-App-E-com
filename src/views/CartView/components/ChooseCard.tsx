@@ -24,7 +24,6 @@ const ChooseCard = () => {
   const [listBanks, setListBanks] = useState();
   const [selectedBanks, setSelectedBanks] = useState<number | null>(null);
   const selectBanks = (id: number) => {
-    console.log("id :>> ", id);
     setSelectedBanks(id);
   };
   useEffect(() => {
@@ -57,16 +56,6 @@ const ChooseCard = () => {
             justifyContent: "center",
           }}
         >
-          <Text
-            style={{
-              color: AppEComm.color.text,
-              fontWeight: "700",
-              letterSpacing: 0.5,
-              fontSize: fontPixel(20),
-            }}
-          >
-            {commnents?.commnents?.shortName}
-          </Text>
           <Image
             style={styles.tinyLogo}
             source={{
@@ -96,20 +85,22 @@ const ChooseCard = () => {
           showsVerticalScrollIndicator={false}
           scrollEnabled={true}
         />
-        <View
-          style={{
-            justifyContent: "flex-end",
-            backgroundColor: AppEComm.color.white,
-          }}
-        >
-          <Spacer height={30} />
-          <Button
-            text="Pay $766.86"
-            buttonSize="Medium"
-            onPress={() => navigation.navigate(ROUTES.ORDER_SUCCESS as never)}
-          />
-          <Spacer height={50} />
-        </View>
+        {selectedBanks && (
+          <View
+            style={{
+              justifyContent: "flex-end",
+              backgroundColor: AppEComm.color.white,
+            }}
+          >
+            <Spacer height={30} />
+            <Button
+              text="Pay"
+              buttonSize="Medium"
+              onPress={() => navigation.navigate(ROUTES.ORDER_SUCCESS as never)}
+            />
+            <Spacer height={50} />
+          </View>
+        )}
       </View>
     </View>
   );

@@ -15,16 +15,40 @@ import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../../navigations/routers";
 import Button from "../../../components/Button/Button";
 import Spacer from "../../../components/Spacer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../redux/reducers/RootReducer";
+import { getAddress } from "../../../redux/actions/AddressAction";
 
-const ItemAddress = ({ data }: any) => {
+interface ComponentChildProps {
+  data: any;
+  onSelectedItem: (itemId: string | null) => void;
+}
+
+const ItemAddress: React.FC<ComponentChildProps> = ({
+  data,
+  onSelectedItem,
+}) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
-  console.log("selectedItem :>> ", selectedItem);
   const navigation: any = useNavigation();
+
   const selectItem = (itemId: string) => {
     setSelectedItem(itemId);
+    onSelectedItem(itemId);
+  };
+
+  const handleDelete = (id: string) => {
+    setTimeout(() => {
+      const filterAddress = data?.filter((item: any) => item?.id !== id);
+      const dataUpdate = [...filterAddress];
+      dispatch(
+        getAddress({
+          dataAddress: dataUpdate,
+        })
+      );
+      onSelectedItem(null);
+    }, 1000);
   };
 
   return data?.map((item: any, index: number) => (
@@ -100,7 +124,7 @@ const ItemAddress = ({ data }: any) => {
             />
           </View>
 
-          <TouchableOpacity onPress={() => console.log("trash")}>
+          <TouchableOpacity onPress={() => handleDelete(item.id)}>
             <IcTrash />
           </TouchableOpacity>
         </View>
@@ -112,7 +136,12 @@ const ItemAddress = ({ data }: any) => {
 const ShiptoScreen = () => {
   const navigation = useNavigation();
   const { data } = useSelector((state: AppState) => state.addAddressReducer);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  console.log("selectedItem :>> ", selectedItem);
 
+  const handleSelectItem = (itemId: string | null) => {
+    setSelectedItem(itemId);
+  };
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
@@ -135,23 +164,30 @@ const ShiptoScreen = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Spacer height={10} />
           <View>
-            <ItemAddress data={data?.dataAddress} />
+            <ItemAddress
+              data={data?.dataAddress}
+              onSelectedItem={handleSelectItem}
+            />
           </View>
         </ScrollView>
-        <View
-          style={{
-            justifyContent: "flex-end",
-            backgroundColor: AppEComm.color.white,
-          }}
-        >
-          <Spacer height={30} />
-          <Button
-            text="Next"
-            buttonSize="Medium"
-            onPress={() => navigation.navigate(ROUTES.PAYMENT as never)}
-          />
-          <Spacer height={50} />
-        </View>
+
+        {selectedItem && (
+          <View
+            style={{
+              justifyContent: "flex-end",
+              backgroundColor: AppEComm.color.white,
+            }}
+          >
+            <Spacer height={30} />
+
+            <Button
+              text="Next"
+              buttonSize="Medium"
+              onPress={() => navigation.navigate(ROUTES.PAYMENT as never)}
+            />
+            <Spacer height={50} />
+          </View>
+        )}
       </View>
     </View>
   );
