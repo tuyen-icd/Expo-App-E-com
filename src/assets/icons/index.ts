@@ -49,7 +49,7 @@ export const ICNextRight = require('./ic_next_right.svg').default;
 export const IcArrowDown = require('./ic_arrow_down.svg').default;
 export const IcCalendar = require('./ic_calendar.svg').default;
 export const IcCalendarActive = require('./ic_calendar_active.svg').default;
-
+export const IcLogout = require('./ic_logout.svg').default;
 
 
 
