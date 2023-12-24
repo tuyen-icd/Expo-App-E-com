@@ -47,7 +47,7 @@ const AccountScreen = () => {
 
         <TouchableOpacity
           onPress={() => {
-            console.log("test");
+            navigation.navigate(ROUTES.ORDER_ACCOUNT as never);
           }}
         >
           <View style={styles.flexBox}>

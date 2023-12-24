@@ -28,21 +28,21 @@ import { setSessionToken } from "../configs";
 import { useDispatch } from "react-redux";
 import { checkTokenAction } from "../redux/actions/AuthAction";
 import { useEffect } from "react";
+import OrderScreen from "../views/OrderView/OrderScreen";
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
-
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     handleCheckTokenProcess();
-  })
+  });
 
   const handleCheckTokenProcess = () => {
-    Credentials.loadTokenToStorage().then(token => {
+    Credentials.loadTokenToStorage().then((token) => {
       if (token && token.length > 0) {
-        console.log('Saved token available');
+        console.log("Saved token available");
         setSessionToken(token);
         dispatch(
           checkTokenAction((error, data) => {
@@ -50,8 +50,8 @@ const AuthNavigator = () => {
               console.log("Validate token failure");
             }
           })
-        )
-      };
+        );
+      }
     });
   };
 
@@ -144,7 +144,6 @@ const AuthNavigator = () => {
           gestureEnabled: false,
         }}
       />
-
 
       <Stack.Screen
         name={ROUTES.SHIP_TO}
@@ -254,10 +253,18 @@ const AuthNavigator = () => {
         }}
       />
 
-
       <Stack.Screen
         name={ROUTES.FAVORITE_PRODUCT}
         component={FavoriteView}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.ORDER_ACCOUNT}
+        component={OrderScreen}
         options={{
           headerShown: false,
           gestureEnabled: false,

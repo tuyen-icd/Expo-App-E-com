@@ -18,6 +18,9 @@ export const REMOVE_ITEM_CART = "REMOVE_ITEM_CART";
 //FAVIOUS
 export const GET_FAVORITE = "GET_FAVORITE";
 
+//ORDER
+export const GET_ORDER = "GET_ORDER";
+
 //ADDRESS
 export const GET_ADDRESS = "GET_ADDRESS";
 

@@ -25,4 +25,5 @@ export const ROUTES = {
     PROFILE__CHANGE_PASSWORD: 'Change Password',
     PRODUCTS_CATEGORY: 'Products of Category',
     FAVORITE_PRODUCT: 'Favorite Product',
+    ORDER_ACCOUNT: 'Order Account',
 }

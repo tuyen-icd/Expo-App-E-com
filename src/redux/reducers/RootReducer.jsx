@@ -5,6 +5,7 @@ import AuthReducer from "./AuthReducer";
 import AddressReducer from "./AddressReducer";
 import CartReducer from "./CartReducer";
 import FavoriteReducer from "./FavoriteReducer";
+import OrderReducer from "./OrderReducer";
 
 const appReducer = combineReducers({
   authReducer: AuthReducer,
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   addAddressReducer: AddressReducer,
   cartReducer: CartReducer,
   favoriteReducer: FavoriteReducer,
+  orderReducer: OrderReducer,
 });
 
 const rootReducer = (state, action) => {

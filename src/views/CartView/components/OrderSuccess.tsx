@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ICSuccess } from "../../../assets/icons";
 import Button from "../../../components/Button/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -9,20 +9,36 @@ import { AppEComm } from "../../../constants/colors";
 import { useDispatch } from "react-redux";
 import { updateShoppingCartAction } from "../../../redux/actions/CartAction";
 import getStoredData from "../../../redux/Helpers";
-import { CART_REDUCER } from "../../../redux/reducers/ReducerTypes";
+import {
+  CART_REDUCER,
+  ORDER_REDUCER,
+} from "../../../redux/reducers/ReducerTypes";
+import { getOrderAction } from "../../../redux/actions/OrderAction";
 
 const OrderSuccess = () => {
-  const { data: cartRedux } = getStoredData(CART_REDUCER);
-  console.log("cartRedux :>> ", cartRedux);
+  const { data: orderRedux } = getStoredData(ORDER_REDUCER);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { data: cartRedux } = getStoredData(CART_REDUCER);
+  useEffect(() => {
+    try {
+      dispatch(getOrderAction(cartRedux?.items));
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, []);
+
   const handleBackToOrder = () => {
-    dispatch(
-      updateShoppingCartAction({
-        items: [],
-      })
-    );
-    navigation.navigate(ROUTES.HOME as never);
+    try {
+      dispatch(
+        updateShoppingCartAction({
+          items: [],
+        })
+      );
+      navigation.navigate(ROUTES.HOME as never);
+    } catch (error) {
+      console.error("Error handling back to order:", error);
+    }
   };
   return (
     <View
