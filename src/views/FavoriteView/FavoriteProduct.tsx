@@ -24,7 +24,7 @@ import { bg_empty_cart } from "../../assets/icons";
 
 const FavoriteProduct = () => {
   const { data: favoriteRedux } = getStoredData(FAVORITE_REDUCER);
-  console.log("favoriteRedux :>> ", favoriteRedux?.items);
+  // console.log("favoriteRedux :>> ", favoriteRedux?.items);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();

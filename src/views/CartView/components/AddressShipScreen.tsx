@@ -148,7 +148,7 @@ const AddressShip: FC<AddressShipProps> = ({ route }) => {
                 },
               });
             }}
-            keyboardType="decimal-pad"
+            // keyboardType="decimal-pad"
             containerStyle={styles.inputs}
           />
         </View>
@@ -167,7 +167,7 @@ const AddressShip: FC<AddressShipProps> = ({ route }) => {
                 },
               });
             }}
-            keyboardType="decimal-pad"
+            // keyboardType="decimal-pad"
             containerStyle={styles.inputs}
           />
         </View>
@@ -186,7 +186,7 @@ const AddressShip: FC<AddressShipProps> = ({ route }) => {
                 },
               });
             }}
-            keyboardType="decimal-pad"
+            // keyboardType="phone-pad"
             containerStyle={styles.inputs}
           />
         </View>

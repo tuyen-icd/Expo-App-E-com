@@ -23,6 +23,7 @@ import {
 import { ShowError } from "../../ultils/Alert";
 import { doLoginAction } from "../../redux/actions/AuthAction";
 import Loader from "../../components/Loader";
+// import { getCustomers } from "../../configs";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 interface LoginFormProps {
   route: any;
@@ -37,6 +38,27 @@ const LoginForm: FC<LoginFormProps> = ({ route }) => {
     password: { value: "", error: null as null | { message: string } },
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  // const [customers, setCustomers] = useState([]);
+  // console.log("customers", customers);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [page, setPage] = useState(1);
+
+  // useEffect(() => {
+  //   const fetchCustomers = async () => {
+  //     try {
+  //       const data = await getCustomers();
+  //       setCustomers(data.customers);
+  //     } catch (err) {
+  //       // setError(err.message);
+  //       console.log(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchCustomers();
+  // }, [page])
 
   // useLayoutEffect(() => {
   //   checkToken();
@@ -101,7 +123,9 @@ const LoginForm: FC<LoginFormProps> = ({ route }) => {
     try {
       dispatch(
         doLoginAction(userName, password, (error, data) => {
-          if (data && data.success && data.status == 200) {
+          // if (data && data.success && data.status == 200) {
+          if (data && data.token) {
+
             navigation.navigate(ROUTES.HOME as never, { flag: true } as never);
           }
           if (error) {

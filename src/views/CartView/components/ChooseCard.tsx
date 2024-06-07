@@ -1,7 +1,5 @@
 import {
-  ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Image,
@@ -36,16 +34,16 @@ const ChooseCard = () => {
       .catch((error) => console.log("error :>> ", error));
   }, []);
 
-  const ItemBanks = (commnents: any) => {
+  const ItemBanks = (comments: any) => {
     return (
       <TouchableOpacity
-        onPress={() => selectBanks(commnents?.commnents?.id)}
-        key={commnents?.commnents?.id}
+        onPress={() => selectBanks(comments?.commnents?.id)}
+        key={comments?.commnents?.id}
       >
         <View
           style={{
             borderColor:
-              selectedBanks === commnents?.commnents?.id
+              selectedBanks === comments?.commnents?.id
                 ? AppEComm.color.blue_001
                 : AppEComm.color.borderColor,
             borderWidth: widthPixel(1.5),
@@ -56,12 +54,7 @@ const ChooseCard = () => {
             justifyContent: "center",
           }}
         >
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: commnents?.commnents?.logo,
-            }}
-          />
+          <Image style={styles.tinyLogo} source={{ uri: comments?.commnents?.logo }} />
         </View>
       </TouchableOpacity>
     );

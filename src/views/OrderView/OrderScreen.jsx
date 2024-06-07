@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import getStoredData from "../../redux/Helpers";
 import { ORDER_REDUCER } from "../../redux/reducers/ReducerTypes";
@@ -9,11 +9,18 @@ import { fontPixel, heightPixel, widthPixel } from "../../ultils/scanling";
 
 const OrderScreen = () => {
   const { data: orderRedux } = getStoredData(ORDER_REDUCER);
-  console.log("orderRedux :>> ", orderRedux);
+  // console.log('orderRedux :>> ', orderRedux);
   const OrderItems = (item) => {
+    console.log('item :>> ', item);
     return (
       <View>
         <Text>abc</Text>
+        <Image
+          style={{width: 50, height: 50}}
+          source={{
+            uri: item.commnents?.images,
+          }}
+        />
       </View>
     );
   };
@@ -26,14 +33,14 @@ const OrderScreen = () => {
       </View>
 
       <View style={{ paddingHorizontal: widthPixel(16), flex: 1 }}>
-        {/* <FlatList
+        <FlatList
           data={orderRedux}
           renderItem={({ item }) => <OrderItems commnents={item} />}
           keyExtractor={(item, index) => index.toString()}
           horizontal={false}
           showsVerticalScrollIndicator={false}
           scrollEnabled={true}
-        /> */}
+        />
       </View>
     </View>
   );

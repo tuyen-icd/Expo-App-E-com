@@ -26,4 +26,5 @@ export const ROUTES = {
     PRODUCTS_CATEGORY: 'Products of Category',
     FAVORITE_PRODUCT: 'Favorite Product',
     ORDER_ACCOUNT: 'Order Account',
+    NOTIFICATION: 'Notification',
 }

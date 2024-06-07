@@ -7,15 +7,20 @@ import { API_LOGIN, API_REGISTER } from "../../configs";
 function* doLoginSaga(action) {
   try {
     const requestData = {
-      email: action.userName,
-      password: action.password,
+      // username: action.userName,
+      // password: action.password,
+      username: 'emilys',
+      password: 'emilyspass',
     };
+
+    console.log('requestData', requestData);
 
     const response = yield call(axios.post, API_LOGIN, requestData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+
     const result = response.data;
     if (result) {
       yield put({
@@ -23,7 +28,8 @@ function* doLoginSaga(action) {
         payload: result,
       });
       action.callback && action.callback(null, result);
-      if (result && result.success == true && result.status === 200) {
+      // if (result && result.success == true && result.status === 200) {
+      if (result && result.token) {
         // console.log("PINGGO");
         Credentials.saveTokenToStorage(result.token);
       }

@@ -13,10 +13,26 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
 import Loader from "../../components/Loader";
+import { notificationTestApp } from "../../configs";
 
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  
+  const sendNotification = async () => {
+    try {
+      setIsLoading(true)
+      const data = await notificationTestApp();
+      console.log("data___", data);
+    } catch (error) {
+      console.log("error");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
       <View style={defaultStyle.header}>
@@ -97,6 +113,21 @@ const AccountScreen = () => {
               <IcLogout />
             </View>
             <Text style={styles.txtTitle}>Logout</Text>
+          </View>
+        </TouchableOpacity>
+
+
+
+        <TouchableOpacity
+          onPress={() => {
+            sendNotification();
+          }}
+        >
+          <View style={styles.flexBox}>
+            <View style={{ width: widthPixel(30) }}>
+              <IcLogout />
+            </View>
+            <Text style={styles.txtTitle}>Button Test Send Notification</Text>
           </View>
         </TouchableOpacity>
       </View>

@@ -13,7 +13,7 @@ import MegaSale from "../../components/MegaSale/MegaSale";
 import ItemProduct from "../../components/ItemProduct/ItemProduct";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
-import { API_FLASH_SALE, API_MEGA_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER } from "../../configs";
+import { API_FLASH_SALE, API_MEGA_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER, getNotification } from "../../configs";
 import Loader from "../../components/Loader";
 import { Skeleton } from '@nlazzos/react-native-skeleton';
 import Spacer from "../../components/Spacer";

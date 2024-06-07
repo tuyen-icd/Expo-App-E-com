@@ -1,3 +1,5 @@
 export const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-};
+    if (!str) return str; // Handle empty string or null/undefined
+    const stringValue = String(str);
+    return stringValue.charAt(0).toUpperCase() + stringValue.slice(1);
+}

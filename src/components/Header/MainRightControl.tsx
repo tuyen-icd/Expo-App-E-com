@@ -1,10 +1,11 @@
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { FC } from 'react'
-import { ICCart, ICFavious, ICNotification, IcShort } from '../../assets/icons';
+import React, { FC, useEffect, useState } from 'react'
+import { ICCart, ICFavious, ICNotification, ICNotificationActive, IcShort } from '../../assets/icons';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
+import { getNotification } from '../../configs';
 
 interface NotiNumberProps {
     number: number,
@@ -26,7 +27,7 @@ const NotiNumber: FC<NotiNumberProps> = ({ number }) => {
 
 const NotiDot: FC<NotiDotProps> = ({ isVisible }) => {
     return isVisible ? (
-        <View></View>
+        <View><Text>Test this here!</Text></View>
     ) : (
         <></>
     );
@@ -46,7 +47,24 @@ const MainRightControl: FC<MainRightControlProps> = ({
 
     let shakeAnimation = new Animated.Value(0);
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
+    const [dataNotification, setDataNotification] = useState<any>(null);
+    console.log("dataNotification", dataNotification);
+
+    useEffect(() => {
+        const getNotificationTestApp = async () => {
+            try {
+                const data = await getNotification();
+                
+                    if (data) {
+                        setDataNotification(data);
+                    }
+            } catch (error) {
+                console.log("error");
+            }
+        };
+        getNotificationTestApp();
+    }, [] )
 
     return (
         <>
@@ -63,11 +81,11 @@ const MainRightControl: FC<MainRightControlProps> = ({
             {visibleNotification && (
                 <TouchableOpacity
                     style={styles.icon}
-                    onPress={() => console.log("abc")}>
-                    <ICNotification />
-                    <NotiDot
-                        isVisible={true}
-                    />
+                    onPress={() => navigation.navigate(ROUTES.NOTIFICATION as never, { dataGetNotification: dataNotification?.data } as never)}
+                >
+                    {
+                        !dataNotification?.isRead ? <ICNotificationActive /> : <ICNotification />
+                    }
                 </TouchableOpacity>
             )}
             {visibleShort && (

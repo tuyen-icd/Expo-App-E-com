@@ -3,7 +3,7 @@ import React from 'react'
 import LoginForm from './LoginForm'
 
 const LoginView = () => {
-    return <LoginForm />
+    return <LoginForm route={undefined} />
 }
 
 export default LoginView

@@ -70,7 +70,7 @@ const OrderSuccess = () => {
           paddingVertical: widthPixel(8),
         }}
       >
-        Thank you for shopping using lafyuu
+        Thank you for shopping using E-COM
       </Text>
       <Button
         text="Back To Order"
