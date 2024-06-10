@@ -26,3 +26,7 @@ export const GET_ADDRESS = "GET_ADDRESS";
 
 //TOKEN
 export const CHECK_SAVED_TOKEN = "CHECK_SAVED_TOKEN";
+
+//Notification
+export const GET_NOTIFICATION = "NOTIFICATION";
+export const UPDATE_NOTIFICATION = "UPDATE_NOTIFICATION";

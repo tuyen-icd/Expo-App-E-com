@@ -13,14 +13,20 @@ import MegaSale from "../../components/MegaSale/MegaSale";
 import ItemProduct from "../../components/ItemProduct/ItemProduct";
 import { useNavigation } from "@react-navigation/native";
 import { ROUTES } from "../../navigations/routers";
-import { API_FLASH_SALE, API_MEGA_SALE, API_PRODUCT_BOTTOM_HOME, API_SLIDER, getNotification } from "../../configs";
+import {
+  API_FLASH_SALE,
+  API_MEGA_SALE,
+  API_PRODUCT_BOTTOM_HOME,
+  API_SLIDER,
+  getNotification,
+} from "../../configs";
 import Loader from "../../components/Loader";
-import { Skeleton } from '@nlazzos/react-native-skeleton';
+import { Skeleton } from "@nlazzos/react-native-skeleton";
 import Spacer from "../../components/Spacer";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [txtSearch, setTxtSearch] = useState("");
   const [flashSale, setFlashSale] = useState([]);
   const [megaSale, setMegaSale] = useState([]);
@@ -32,7 +38,9 @@ const HomeScreen = () => {
   const loadProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`https://dummyjson.com/products?limit=50&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`);
+      const response = await axios.get(
+        `https://dummyjson.com/products?limit=50&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`
+      );
       const data = response.data.products;
       if (data.length > 0) {
         setProducts([...products, ...data]);
@@ -41,7 +49,7 @@ const HomeScreen = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -51,29 +59,25 @@ const HomeScreen = () => {
 
   useEffect(() => {
     loadProducts();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const dataFlashSale = axios
-      .get(API_FLASH_SALE)
-      .then((response) => {
-        setFlashSale(response.data.products);
-      });
-    
-    const dataMegaSale = axios
-      .get(API_MEGA_SALE)
-      .then((response) => {
-        setMegaSale(response.data.products);
-      })
+    console.log("PING15");
 
-    const dataSlider = axios
-      .get(API_SLIDER)
-      .then((response) => {
-        const result = response.data.products.map(
-          (item: { thumbnail: string }) => item.thumbnail
-        );
-        setDataSliderCarousel(result);
-      });
+    const dataFlashSale = axios.get(API_FLASH_SALE).then((response) => {
+      setFlashSale(response.data.products);
+    });
+
+    const dataMegaSale = axios.get(API_MEGA_SALE).then((response) => {
+      setMegaSale(response.data.products);
+    });
+
+    const dataSlider = axios.get(API_SLIDER).then((response) => {
+      const result = response.data.products.map(
+        (item: { thumbnail: string }) => item.thumbnail
+      );
+      setDataSliderCarousel(result);
+    });
 
     const dataProductBottom = axios
       .get(API_PRODUCT_BOTTOM_HOME)
@@ -87,13 +91,15 @@ const HomeScreen = () => {
     setTxtSearch(e);
   };
   const handleSearchSubmit = () => {
-    if (txtSearch !== '') {
-      navigation.navigate(ROUTES.EXPLORE_SEARCH as never, { txtSearch: txtSearch } as never)
+    if (txtSearch !== "") {
+      navigation.navigate(
+        ROUTES.EXPLORE_SEARCH as never,
+        { txtSearch: txtSearch } as never
+      );
     }
     return;
   };
   return (
-
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
         <View style={styles.emptyContainer}>
@@ -107,33 +113,39 @@ const HomeScreen = () => {
             onSubmitEditing={handleSearchSubmit}
           />
         </View>
-        <MainRightControl visibleNotification={true} visibleFavious={true} visibleShort={false} />
+        <MainRightControl
+          visibleNotification={true}
+          visibleFavious={true}
+          visibleShort={false}
+        />
       </View>
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ paddingTop: heightPixel(16) }}>
-            {
-              !dataSliderCarousel ?
-                <Skeleton
+            {!dataSliderCarousel ? (
+              <Skeleton
+                style={{
+                  height: heightPixel(206),
+                  borderRadius: 5,
+                }}
+              />
+            ) : (
+              <View>
+                <SliderImage dataSliderCarousel={dataSliderCarousel} />
+                <View
                   style={{
-                    height: heightPixel(206),
-                    borderRadius: 5,
-                  }} /> : <View>
-                  <SliderImage dataSliderCarousel={dataSliderCarousel} />
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: "30%",
-                      left: widthPixel(24),
-                      width: widthPixel(209),
-                    }}
-                  >
-                    <Text style={styles.txtPositionBackGround}>
-                      Super Flash Sale 50% Off
-                    </Text>
-                  </View>
+                    position: "absolute",
+                    top: "30%",
+                    left: widthPixel(24),
+                    width: widthPixel(209),
+                  }}
+                >
+                  <Text style={styles.txtPositionBackGround}>
+                    Super Flash Sale 50% Off
+                  </Text>
                 </View>
-            }
+              </View>
+            )}
           </View>
           <Spacer height={20} />
           <View>

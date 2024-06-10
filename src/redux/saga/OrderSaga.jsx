@@ -3,7 +3,11 @@ import { GET_ORDER } from "../actions/ActionTypes";
 import { getOrderSuccess } from "../actions/OrderAction";
 
 function* getOrder(action) {
-  yield put(getOrderSuccess(action.payload));
+  const updatedOrder = {
+    dayTime: new Date(),
+    items: action.payload,
+  };
+  yield put(getOrderSuccess([...action.payload, updatedOrder]));
 }
 
 function* orderSaga() {

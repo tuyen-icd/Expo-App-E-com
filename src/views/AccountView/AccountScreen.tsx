@@ -18,10 +18,10 @@ import { notificationTestApp } from "../../configs";
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const sendNotification = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const data = await notificationTestApp();
       console.log("data___", data);
     } catch (error) {
@@ -29,9 +29,7 @@ const AccountScreen = () => {
     } finally {
       setIsLoading(false);
     }
-  }
-
-
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
@@ -115,8 +113,6 @@ const AccountScreen = () => {
             <Text style={styles.txtTitle}>Logout</Text>
           </View>
         </TouchableOpacity>
-
-
 
         <TouchableOpacity
           onPress={() => {
