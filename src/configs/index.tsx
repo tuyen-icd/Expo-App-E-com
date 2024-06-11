@@ -23,7 +23,7 @@ export function getSessionToken() {
 import axios from "axios";
 import { Alert } from "react-native";
 
-const API_TEST_APP = "http://localhost:5001";
+export const API_TEST_APP = "http://localhost:5000";
 
 // export const getCustomers = async() => {
 //     try {

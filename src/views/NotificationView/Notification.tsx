@@ -19,16 +19,6 @@ import { defaultStyle } from "../../constants/defaultStyle";
 import Loader from "../../components/Loader";
 import axios from "axios";
 import { getNotification } from "../../configs";
-interface NotificationProps {
-  dataNotification: any;
-}
-
-// const Notification = (props: NotificationProps) => {
-//   const [isLoading, setIsLoading] = useState(false);
-//   const navigation = useNavigation();
-//   const [dataNotificationCurrent, setDataNotificationCurrent] = useState<any>(
-//     props?.dataNotification
-//   );
 
 const Notification = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,41 +27,44 @@ const Notification = () => {
 
   const getNotificationTestApp = async () => {
     const response = await getNotification();
-    console.log("responseresponse", response.data);
     setDataNotificationCurrent(response?.data);
   };
 
   useEffect(() => {
-    console.log("PING1");
     getNotificationTestApp();
   }, []);
 
+  const handleUpdate = async (notificationId: number) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.put(`http://localhost:5000/user/update-notification/${notificationId}`);
+      if (response?.data?.success) {
+        getNotificationTestApp();
+      }
+    } catch (error) {
+      console.error('Error in handleUpdate:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const handleDelete = async (notificationId: number) => {
     setIsLoading(true);
-    // console.log("notificationId", notificationId);
     try {
       const response = await axios.delete(
-        `http://localhost:5001/user/delete-notification/${notificationId}`
+        `http://localhost:5000/user/delete-notification/${notificationId}`
       );
-
       if (response.data.success) {
         await getNotificationTestApp();
-      }
-
-      //     const filteredNotifications = dataNotificationCurrent.filter(
-      //       (item: any) => item._id !== notificationId
-      //     );
-      //     const dataUpdate = [...filteredNotifications];
-      //     setDataNotificationCurrent(dataUpdate);
-      //   } else {
-      //     console.error("Error in handleDelete");
-      //   }
+      } 
     } catch (error) {
       console.error("Error in handleDelete:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <View>
@@ -123,6 +116,7 @@ const Notification = () => {
             renderItem={({ item }) => (
               <SwipeableNotification
                 notification={item}
+                onUpdate={handleUpdate}
                 onDelete={handleDelete}
               />
             )}
@@ -137,11 +131,13 @@ const Notification = () => {
 interface SwipeableNotificationProps {
   notification: any;
   onDelete: any;
+  onUpdate: any;
 }
 
 const SwipeableNotification: FC<SwipeableNotificationProps> = ({
   notification,
   onDelete,
+  onUpdate,
 }) => {
   const swipeoutProps = {
     right: [
@@ -154,14 +150,26 @@ const SwipeableNotification: FC<SwipeableNotificationProps> = ({
     autoClose: true,
     disabled: false,
   };
+  const navigation: any = useNavigation();
+  const backgroundColor = notification?.isCheck ? '#ffff' : '#ccc';
+
+  const handleUpadte = async () => {
+    await onUpdate(notification?._id);
+    navigation.navigate(
+      ROUTES.NOTIFICATION_DETAIL as never,
+      { notification } as never)
+  }
 
   return (
     <Swipeout {...swipeoutProps}>
-      <View style={styles.borderItem}>
+      <View style={[styles.borderItem, { backgroundColor }]}>
         <View style={[defaultStyle.flexRowStart]}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            style={[defaultStyle.flexRowStart]}
+            onPress={handleUpadte}
+          >
             <Image style={styles.image} source={ImageProfile} />
-          </TouchableOpacity>
+          
           <View
             style={[
               defaultStyle.flexJustify,
@@ -174,7 +182,8 @@ const SwipeableNotification: FC<SwipeableNotificationProps> = ({
                   notification?.notification.slice(1)}
               </Text>
             </View>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </Swipeout>
@@ -188,6 +197,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderColor: AppEComm.color.borderColor,
+    // borderColor: AppEComm.color.red,
   },
   image: {
     width: widthPixel(72),

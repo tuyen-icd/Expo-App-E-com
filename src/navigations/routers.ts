@@ -27,4 +27,5 @@ export const ROUTES = {
     FAVORITE_PRODUCT: 'Favorite Product',
     ORDER_ACCOUNT: 'Order Account',
     NOTIFICATION: 'Notification',
+    NOTIFICATION_DETAIL: 'Notification Detail',
 }

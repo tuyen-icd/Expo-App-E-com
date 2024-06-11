@@ -5,6 +5,7 @@ import addressSaga from "./AddressSaga";
 import cartSaga from "./CartSaga";
 import favorite from "./FavoriteSaga";
 import orderSaga from "./OrderSaga";
+import notificationSaga from "./NotificationSaga";
 
 export function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export function* rootSaga() {
     fork(cartSaga),
     fork(favorite),
     fork(orderSaga),
+    fork(notificationSaga),
   ]);
 }

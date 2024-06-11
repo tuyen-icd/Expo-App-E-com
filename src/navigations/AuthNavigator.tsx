@@ -30,6 +30,7 @@ import { checkTokenAction } from "../redux/actions/AuthAction";
 import { useEffect } from "react";
 import OrderScreen from "../views/OrderView/OrderScreen";
 import NotificationView from "../views/NotificationView";
+import NotificationDetail from "../views/NotificationView/NotificationDetail";
 
 const Stack = createStackNavigator();
 
@@ -266,6 +267,15 @@ const AuthNavigator = () => {
       <Stack.Screen
         name={ROUTES.NOTIFICATION}
         component={NotificationView}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.NOTIFICATION_DETAIL}
+        component={NotificationDetail}
         options={{
           headerShown: false,
           gestureEnabled: false,

@@ -18,7 +18,6 @@ import {
   API_MEGA_SALE,
   API_PRODUCT_BOTTOM_HOME,
   API_SLIDER,
-  getNotification,
 } from "../../configs";
 import Loader from "../../components/Loader";
 import { Skeleton } from "@nlazzos/react-native-skeleton";
@@ -62,8 +61,6 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log("PING15");
-
     const dataFlashSale = axios.get(API_FLASH_SALE).then((response) => {
       setFlashSale(response.data.products);
     });

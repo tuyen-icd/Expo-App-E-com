@@ -5,9 +5,14 @@ import { defaultStyle } from "../../constants/defaultStyle";
 import BackHeader from "../../components/Header/BackHeader";
 import Notification from "./Notification";
 import { getNotification } from "../../configs";
+import { useDispatch } from "react-redux";
+import { getNotificationAction } from "../../redux/actions/NotificationAction";
+import getStoredData from "../../redux/Helpers";
+import { NOTIFICATION_REDUCER } from "../../redux/reducers/ReducerTypes";
+import axios from "axios";
 
 const NotificationView = () => {
-  // const { dataGetNotification } = route.params;
+  
   return (
     <View style={{ flex: 1, backgroundColor: AppEComm.color.white }}>
       <View style={defaultStyle.header}>
