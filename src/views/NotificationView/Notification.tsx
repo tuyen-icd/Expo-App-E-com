@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { AppEComm } from "../../constants/colors";
 import { fontPixel, heightPixel, widthPixel } from "../../ultils/scanling";
 import { useNavigation } from "@react-navigation/native";
@@ -20,25 +20,25 @@ import Loader from "../../components/Loader";
 import axios from "axios";
 import { getNotification } from "../../configs";
 
-const Notification = () => {
+interface NotificationProps{
+  data: any;
+}
+
+const Notification: FC<NotificationProps> = (data) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
-  const [dataNotificationCurrent, setDataNotificationCurrent] = useState<any>();
-
+  const [dataNotificationCurrent, setDataNotificationCurrent] = useState<any>(data?.data?.dataGetNotification);
   const getNotificationTestApp = async () => {
     const response = await getNotification();
     setDataNotificationCurrent(response?.data);
   };
-
-  useEffect(() => {
-    getNotificationTestApp();
-  }, []);
 
   const handleUpdate = async (notificationId: number) => {
     setIsLoading(true);
     try {
       const response = await axios.put(`http://localhost:5000/user/update-notification/${notificationId}`);
       if (response?.data?.success) {
+        setDataNotificationCurrent(dataNotificationCurrent)
         getNotificationTestApp();
       }
     } catch (error) {
@@ -63,9 +63,7 @@ const Notification = () => {
       setIsLoading(false);
     }
   };
-
-
-
+  
   return (
     <View>
       {dataNotificationCurrent == null || dataNotificationCurrent == "" ? (
@@ -111,7 +109,7 @@ const Notification = () => {
       ) : (
         <View>
           <FlatList
-            data={dataNotificationCurrent}
+              data={dataNotificationCurrent}
             keyExtractor={(item) => item._id.toString()}
             renderItem={({ item }) => (
               <SwipeableNotification
@@ -139,6 +137,8 @@ const SwipeableNotification: FC<SwipeableNotificationProps> = ({
   onDelete,
   onUpdate,
 }) => {
+
+
   const swipeoutProps = {
     right: [
       {
@@ -157,7 +157,7 @@ const SwipeableNotification: FC<SwipeableNotificationProps> = ({
     await onUpdate(notification?._id);
     navigation.navigate(
       ROUTES.NOTIFICATION_DETAIL as never,
-      { notification } as never)
+      { data: notification } as never)
   }
 
   return (

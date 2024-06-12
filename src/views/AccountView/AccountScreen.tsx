@@ -23,7 +23,6 @@ const AccountScreen = () => {
     try {
       setIsLoading(true);
       const data = await notificationTestApp();
-      console.log("data___", data);
     } catch (error) {
       console.log("error");
     } finally {

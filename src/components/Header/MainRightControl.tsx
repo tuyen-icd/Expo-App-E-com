@@ -1,14 +1,10 @@
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { FC, useEffect, useState } from 'react'
-import { ICCart, ICFavious, ICNotification, ICNotificationActive, IcShort } from '../../assets/icons';
+import React, { FC, useState } from 'react'
+import {  ICFavious, ICNotification, ICNotificationActive, IcShort } from '../../assets/icons';
 import { fontPixel, heightPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../navigations/routers';
-import { useDispatch } from 'react-redux';
-import { getNotificationAction } from '../../redux/actions/NotificationAction';
-import { NOTIFICATION_REDUCER } from '../../redux/reducers/ReducerTypes';
-import getStoredData from '../../redux/Helpers';
 import { getNotification } from '../../configs';
 
 interface NotiNumberProps {
@@ -53,23 +49,33 @@ const MainRightControl: FC<MainRightControlProps> = ({
     const navigation: any = useNavigation();
     const [dataNotification, setDataNotification] = useState<any>(null);
 
-    useEffect(() => {
-        if (visibleNotification) {
-            console.log("ABC");
-            const getNotificationTestApp = async () => {
-                try {
-                    const data = await getNotification();
-                    if (data) {
-                        setDataNotification(data);
-                    }
-                } catch (error) {
-                    console.log("error");
-                }
-            };
-            getNotificationTestApp();
+    const getNotificationTestApp = async () => {
+        try {
+            const response = await getNotification();
+            if (response) {
+                setDataNotification(response)
+            } else {
+                console.error('Received data is not an array', response);
+            }
+        } catch (error) {
+            console.log("error_getNotificationTestApp", error);
         }
-        
-    }, [] )
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            // This effect will run when the screen is focused
+            console.log('HomeScreen is focused');
+            getNotificationTestApp();
+
+            return () => {
+                // This cleanup function will run when the screen is unfocused
+                console.log('HomeScreen is unfocused');
+            };
+        }, [])
+    );
+
+
 
     return (
         <>

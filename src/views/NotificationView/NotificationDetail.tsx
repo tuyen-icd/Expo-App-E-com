@@ -2,30 +2,27 @@ import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import React, { FC } from 'react'
 import { AppEComm } from '../../constants/colors'
 import BackHeader from '../../components/Header/BackHeader'
-import { ICExplore } from '../../assets/icons'
 import { heightPixel, widthPixel } from '../../ultils/scanling'
 import { useNavigation } from '@react-navigation/native'
-import { ROUTES } from '../../navigations/routers'
 
 interface NotificationDetailProps{
     route: any;
 }
 
 const NotificationDetail: FC<NotificationDetailProps> = ({ route }) => {
-    const { notification } = route.params;
-    console.log('notification', notification);
+    const  data  = route.params;
     const navigation = useNavigation();
     return (
         <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: AppEComm.color.white, flex: 1 }}>
                 <View style={styles.header}>
-                        <BackHeader title={''} />
+                        <BackHeader title={'Notification Detail'} />
                 </View>
                 <View style={{ flex: 1, paddingHorizontal: 16, paddingBottom: heightPixel(50) }}></View>
             </View>
             
             <View style={styles.container}>
-                <Text>{notification?.notification}</Text>
+                <Text>{data?.data.notification}</Text>
             </View>
         </View>
   )
