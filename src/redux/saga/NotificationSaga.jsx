@@ -6,7 +6,7 @@ import { API_TEST_APP } from "../../configs";
 
 function* getNotificationSaga(action) {
   try {
-    const response = yield call(() => axios.get('http://localhost:5000/user/get-notification'));
+    const response = yield call(() => axios.get('http://192.168.1.57:5000/user/get-notification'));
     console.log('response_SAGA', response?.data);
     if (response && response.data) {
       let results = response.data;

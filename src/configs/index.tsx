@@ -6,7 +6,7 @@ export const API_FLASH_SALE =
 export const API_MEGA_SALE =
   "https://dummyjson.com/products?limit=10&skip=80&select=id,title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images";
 export const API_SLIDER =
-  "https://dummyjson.com/products?limit=5&skip=1&select=thumbnail";
+  "https://dummyjson.com/products?limit=5&skip=15&select=thumbnail";
 export const API_ALL_CATEGORY = "https://dummyjson.com/products/category-list";
 export const API_PRODUCT_BOTTOM_HOME =
   "https://dummyjson.com/products?limit=10&skip=32&select=id,title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images";
@@ -23,7 +23,7 @@ export function getSessionToken() {
 import axios from "axios";
 import { Alert } from "react-native";
 
-export const API_TEST_APP = "http://localhost:5000";
+export const API_TEST_APP = "http://192.168.1.57:5000";
 
 // export const getCustomers = async() => {
 //     try {

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { AppEComm } from "../../constants/colors";
 import { fontPixel, heightPixel, widthPixel } from "../../ultils/scanling";
 import { useNavigation } from "@react-navigation/native";
@@ -25,18 +25,40 @@ interface NotificationProps{
 }
 
 const Notification: FC<NotificationProps> = (data) => {
+
+  useEffect(() => {
+    if (data?.data?.dataGetNotification) {
+      const sortedData = [...data?.data?.dataGetNotification].sort((a, b) => {
+        if (a._id > b._id) return -1;
+        if (a._id < b._id) return 1;
+        return 0;
+      });
+      setDataNotificationCurrent(sortedData);
+    }
+  }, [data]);
+
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const [dataNotificationCurrent, setDataNotificationCurrent] = useState<any>(data?.data?.dataGetNotification);
+  console.log('dataNotificationCurrent_sort', data?.data?.dataGetNotification);
+
   const getNotificationTestApp = async () => {
     const response = await getNotification();
-    setDataNotificationCurrent(response?.data);
+
+    if (response?.data) {
+      const sortedData = [...response?.data].sort((a, b) => {
+        if (a._id > b._id) return -1;
+        if (a._id < b._id) return 1;
+        return 0;
+      });
+      setDataNotificationCurrent(sortedData);
+    }
   };
 
   const handleUpdate = async (notificationId: number) => {
     setIsLoading(true);
     try {
-      const response = await axios.put(`http://localhost:5000/user/update-notification/${notificationId}`);
+      const response = await axios.put(`http://192.168.1.57:5000/user/update-notification/${notificationId}`);
       if (response?.data?.success) {
         setDataNotificationCurrent(dataNotificationCurrent)
         getNotificationTestApp();
@@ -52,7 +74,7 @@ const Notification: FC<NotificationProps> = (data) => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/user/delete-notification/${notificationId}`
+        `http://192.168.1.57:5000/user/delete-notification/${notificationId}`
       );
       if (response.data.success) {
         await getNotificationTestApp();

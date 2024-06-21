@@ -5,7 +5,7 @@ import { fontPixel, widthPixel } from '../../ultils/scanling';
 import { AppEComm } from '../../constants/colors';
 
 interface SliderImageProps {
-    dataSliderCarousel: any
+    dataSliderCarousel: any;
 }
 
 const SliderImage: FC<SliderImageProps> = ({ dataSliderCarousel }) => {
@@ -13,7 +13,7 @@ const SliderImage: FC<SliderImageProps> = ({ dataSliderCarousel }) => {
         <View>
             <Carousel
                 images={dataSliderCarousel}
-                enableGestureSwipe={true}
+                enableGestureSwipe={false}
                 height={206}
             />
         </View>

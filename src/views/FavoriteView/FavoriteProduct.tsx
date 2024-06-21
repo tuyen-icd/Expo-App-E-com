@@ -10,6 +10,7 @@ import React, { FC, useState } from "react";
 import getStoredData from "../../redux/Helpers";
 import { FAVORITE_REDUCER } from "../../redux/reducers/ReducerTypes";
 import Swipeout from "react-native-swipeout";
+import { ViewStyle } from 'react-native';
 import { fontPixel, heightPixel, widthPixel } from "../../ultils/scanling";
 import { defaultStyle } from "../../constants/defaultStyle";
 import { AppEComm } from "../../constants/colors";

@@ -1,4 +1,4 @@
-import { DO_LOGIN, DO_REGISTER, SUCCESS } from "./ActionTypes";
+import { CHECK_SAVED_TOKEN, DO_LOGIN, DO_REGISTER, SUCCESS } from "./ActionTypes";
 
 
 //LOGIN

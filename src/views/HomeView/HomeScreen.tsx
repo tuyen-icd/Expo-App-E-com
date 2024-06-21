@@ -30,6 +30,7 @@ const HomeScreen = () => {
   const [flashSale, setFlashSale] = useState([]);
   const [megaSale, setMegaSale] = useState([]);
   const [dataSliderCarousel, setDataSliderCarousel] = useState([]);
+  // console.log('dataSliderCarousel', dataSliderCarousel);
   const [dataProductBottom, setDataProductBottom] = useState<any[]>([]);
   const [products, setProducts] = useState<any>([]);
   const [page, setPage] = useState(10);
@@ -41,6 +42,7 @@ const HomeScreen = () => {
         `https://dummyjson.com/products?limit=50&skip=50&select=title,price,description,discountPercentage,rating,stock,brand,category,thumbnail,images`
       );
       const data = response.data.products;
+      console.log('data', data);
       if (data.length > 0) {
         setProducts([...products, ...data]);
         setPage(page + 10);
@@ -61,26 +63,67 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    const dataFlashSale = axios.get(API_FLASH_SALE).then((response) => {
-      setFlashSale(response.data.products);
-    });
+    
+    const fetchDataFlashSale = async () => {
+      try {
+        const response = await axios.get(API_FLASH_SALE);
+        const result = response.data.products;
+        setFlashSale(result);
+        
+      } catch (error) {
+        console.log("Error fetching fetchDataFlashSale: ", error);
+      }
+    }
+    // const dataFlashSale = axios.get(API_FLASH_SALE).then((response) => {
+    //   setFlashSale(response.data.products);
+    // });
 
-    const dataMegaSale = axios.get(API_MEGA_SALE).then((response) => {
-      setMegaSale(response.data.products);
-    });
+    const fetchDataMegaSale = async () => {
+      try {
+        const response = await axios.get(API_MEGA_SALE);
+        const result = response.data.products;
+        setMegaSale(result);
+      } catch (error) {
+        console.log("Error fetching fetchDataMegaSale: ", error);
+      }
+    }
 
-    const dataSlider = axios.get(API_SLIDER).then((response) => {
-      const result = response.data.products.map(
-        (item: { thumbnail: string }) => item.thumbnail
-      );
-      setDataSliderCarousel(result);
-    });
+    // const dataMegaSale = axios.get(API_MEGA_SALE).then((response) => {
+    //   setMegaSale(response.data.products);
+    // });
 
-    const dataProductBottom = axios
-      .get(API_PRODUCT_BOTTOM_HOME)
-      .then((response) => {
-        setDataProductBottom(response.data.products);
-      });
+    const fetchDataSlider = async () => {
+      try {
+        const response = await axios.get(API_SLIDER);
+        const result = response.data.products.map(
+          (item: { thumbnail: string }) => item?.thumbnail
+        );
+        setDataSliderCarousel(result);
+      } catch (error) {
+        console.log("Error fetching fetchDataSlider: ", error);
+      }
+    };
+    const fetchDataProductBottom = async () => {
+      try {
+        const response = await axios.get(API_PRODUCT_BOTTOM_HOME);
+        const result = response.data.products;
+        setDataProductBottom(result);
+      } catch (error) {
+        console.log("Error fetching fetchDataProductBottom: ", error);
+      }
+    }
+
+    fetchDataSlider();
+    fetchDataFlashSale();
+    fetchDataMegaSale();
+    fetchDataProductBottom();
+
+    // const dataProductBottom = axios
+    //   .get(API_PRODUCT_BOTTOM_HOME)
+    //   .then((response) => {
+    //     setDataProductBottom(response.data.products);
+    //   });
+
     // dispatch(getProduct(dataProduct));
   }, []);
 
@@ -119,7 +162,7 @@ const HomeScreen = () => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ paddingTop: heightPixel(16) }}>
-            {!dataSliderCarousel ? (
+            {dataSliderCarousel.length == 0 ? (
               <Skeleton
                 style={{
                   height: heightPixel(206),
