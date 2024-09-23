@@ -123,8 +123,9 @@ const LoginForm: FC<LoginFormProps> = ({ route }) => {
     try {
       dispatch(
         doLoginAction(userName, password, (error, data) => {
+          console.log("data-data", data);
           // if (data && data.success && data.status == 200) {
-          if (data && data.token) {
+          if (data && data.accessToken) {
 
             navigation.navigate(ROUTES.HOME as never, { flag: true } as never);
           }
