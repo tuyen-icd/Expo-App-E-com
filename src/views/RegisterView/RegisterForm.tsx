@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import Checkbox from "expo-checkbox";
 import React, { useState } from 'react';
 import {
@@ -28,6 +28,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { doRegisterAction } from '../../redux/actions/AuthAction';
 import Loader from '../../components/Loader';
+import axios from 'axios';
 
 
 const RegisterForm = () => {
@@ -57,7 +58,7 @@ const RegisterForm = () => {
             registerState.retypePassword.value
         );
         const checkBoxError = !registerState.isChecked;
-        console.log("checkBoxError :>> ", checkBoxError);
+        // console.log("checkBoxError :>> ", checkBoxError);
 
         setRegisterState({
             ...registerState,
@@ -108,36 +109,72 @@ const RegisterForm = () => {
         }
     };
 
-    const registerAction = () => {
-        setIsLoading(true)
-
-        const userData = {
-            name: registerState.fullName.value,
-            email: registerState.email.value,
-            phone: registerState.phoneNumber.value,
-            password: registerState.password.value,
-            password_confirmation: registerState.retypePassword.value,
-        };
-        dispatch(
-            doRegisterAction(userData, (error, data) => {
-                if (data) {
-                    if (!Array.isArray(data.errors) || !data.errors.length) {
-                        console.log("registerData ==", data);
-                        ShowError(data.message, () => {
-                            backToLogin();
-                        });
-                        return;
-                    }
-                    ShowError(data.errors[0]);
+    const registerAction = async () => {
+        console.log("ping_go");
+        setIsLoading(true);
+        try {
+            const useData = axios.post("http://localhost:3000/users_app", {
+                "name": registerState.fullName.value,
+                "email": registerState.email.value,
+                "phone": registerState.phoneNumber.value,
+                "password": registerState.password.value,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((res: any) => {
+                console.log("res", res);
+                if (res._id !== 0) {
+                    console.log("pinggo-1");
+                    setIsLoading(false);
+                    ShowError("Register Account Successful", () => navigation.goBack());
+                } else {
+                    setIsLoading(false);
+                    console.log("PING_GO2");
+                    ShowError("Error", res.message);
                 }
-                if (error) {
-                    ShowError(error);
-                    console.log("Register Error ==", error);
-                }
+            }).catch((error) => {
                 setIsLoading(false);
-            })
-        );
-    };
+                ShowError(error.message);
+            } );
+        } catch (error) {
+            console.log("PING_GO3");
+            setIsLoading(false);
+            console.error(error);
+        }
+
+    }
+
+    // const registerAction = () => {
+    //     setIsLoading(true)
+
+    //     const userData = {
+    //         name: registerState.fullName.value,
+    //         email: registerState.email.value,
+    //         phone: registerState.phoneNumber.value,
+    //         password: registerState.password.value,
+    //         password_confirmation: registerState.retypePassword.value,
+    //     };
+    //     dispatch(
+    //         doRegisterAction(userData, (error, data) => {
+    //             if (data) {
+    //                 if (!Array.isArray(data.errors) || !data.errors.length) {
+    //                     console.log("registerData ==", data);
+    //                     ShowError(data.message, () => {
+    //                         backToLogin();
+    //                     });
+    //                     return;
+    //                 }
+    //                 ShowError(data.errors[0]);
+    //             }
+    //             if (error) {
+    //                 ShowError(error);
+    //                 console.log("Register Error ==", error);
+    //             }
+    //             setIsLoading(false);
+    //         })
+    //     );
+    // };
 
     const backToLogin = () => {
         navigation.navigate(ROUTES.LOGIN as never);
